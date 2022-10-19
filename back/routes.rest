@@ -1,0 +1,18 @@
+POST http://localhost:5000/api/data
+Content-Type: application/json
+
+{
+        "loanNum":897654329,
+        "name":"Antony",
+        "address":"kjadghds saigu",
+        "city":"easrrr",
+        "state":"SK",
+        "amount":347890,
+        "type":"Purchase",
+        "product":"zskfg usidg",
+        "status":"Pending",
+        "days": 21
+}
+
+###
+GET http://localhost:5000/api/data
