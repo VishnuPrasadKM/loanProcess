@@ -1,0 +1,123 @@
+.header{
+    display: flex;
+    background-color: rgb(35, 35, 157);
+    padding: 10px 50px;
+    color: white;
+    align-items: center;
+}
+.divider{
+    padding: 10px;
+}
+
+/* search box */
+
+  form {
+    /*  */
+    margin-left: 40px;
+    display: flex;
+    align-items: center;
+
+  }
+  .field {
+    display: flex;
+    flex-flow: column-reverse;
+    margin-bottom: 1em;
+    margin-top: 0%;
+    width: 40%; 
+  }
+  label, input {
+    transition: all 0.2s;
+    touch-action: manipulation;
+  }
+  
+  input {
+    font-size: 1.5em;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    font-family: inherit;
+    -webkit-appearance: none;
+    border-radius: 0;
+    padding: 0;
+    cursor: text;
+  }
+  input:focus {
+    outline: 0;
+    border-bottom: 1px solid #666;
+  }
+  label {
+    letter-spacing: 0.05em;
+    font-size: 10px;
+  }
+  input:placeholder-shown + label {
+    cursor: text;
+    max-width: 66.66%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transform-origin: left bottom;
+    transform: translate(0, 2.125rem) scale(1.5);
+  }
+  ::-webkit-input-placeholder {
+    opacity: 0;
+    font-size: 18px;
+    transition: inherit;
+  }
+  input:focus::-webkit-input-placeholder {
+    opacity: 1;
+    font-size: 18px;
+  }
+  input:not(:placeholder-shown) + label,
+  input:focus + label {
+    transform: translate(0, 0) scale(1);
+    cursor: pointer;
+  }
+
+  /* Search box end */
+
+  /* Modal */
+.modal-content{
+  margin: auto;
+  /* width: 80%; */
+}
+.form-check-input{
+  width: 20px;
+  height: 20px;
+}
+.ag-paging-panel{
+  justify-content: space-between;
+}
+.modalInput input{
+  font-size: 25px;
+  font-weight: 300;
+  width: 100%;
+}
+
+.itemStyle input{
+  font-size: 1em;
+}
+
+.hiddenBtn{
+  visibility: hidden;
+}
+
+/* $ icon Waiver */
+
+.input-icon {
+  position: relative;
+}
+
+.input-icon > i {
+  position: absolute;
+  display: block;
+  transform: translate(0, -50%);
+  top: 50%;
+  pointer-events: none;
+  width: 25px;
+  text-align: center;
+  font-style: normal;
+}
+
+.input-icon > input {
+  padding-left: 25px;
+  padding-right: 0;
+}
