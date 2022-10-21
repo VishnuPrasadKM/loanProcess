@@ -4,7 +4,7 @@ import RateLock from './rateLock';
 import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
 import 'ag-grid-community/styles/ag-theme-alpine.css'; // Optional theme CSS
 import { useNavigate } from 'react-router-dom';
-
+import Waivers from './waivers';
 
 
 const ModalComponent = (prams) =>{
@@ -13,7 +13,14 @@ const ModalComponent = (prams) =>{
 
     return(
     <>
-    <a onClick={()=>navigate(`/waivers/?${prams.value}`)}>{prams.value}</a>
+    <a onClick={()=>
+      {
+        // console.log(prams.data.amount);
+        let amt = prams.data.amount;
+        <Waivers amount={amt} />;
+        navigate(`/ratelock/?${prams.value}`)
+      }}>
+        {prams.value}</a>
     </>)
 }
 
@@ -32,7 +39,7 @@ const Data = () => {
       flex:1,
       cellRenderer: ModalComponent,
     },
-    {headerName:"Primary Borrower", field: "name", flex:1.2},
+    {headerName:"Primary Borrower", field: "name", flex:1.2,suppressToolPanel: true},
     {headerName:"Property Address",field: "address", flex:1.3},
     {headerName:"City",field: "city", flex:0.7},
     {headerName:"State",field: "state", flex:0.6},
@@ -73,7 +80,7 @@ const Data = () => {
  // Example of consuming Grid Event
  const cellClickedListener = useCallback( event => {
    console.log('cellClicked', event);
-//    ModalComponent(event)
+   console.log(event.data.amount)
  }, []);
 
  // Example load data from sever
