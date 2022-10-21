@@ -10,9 +10,9 @@ import { Col, Container, Row } from 'react-bootstrap';
 import {RiDeleteBin5Line} from 'react-icons/ri'
 import {useNavigate} from 'react-router-dom'
 
-const Waivers=() =>{
+const Waivers=(prams) =>{
+  console.log(typeof(prams.amt))
   const [show, setShow] = useState(true);
-  const [date, setDate] = useState(null);
   const navigate = useNavigate();
   const handleClose = () => {
     setShow(false)
@@ -39,7 +39,7 @@ const Waivers=() =>{
             <Modal.Body>
               <Container>
                 <Row style={{border:'15px solid #efefef'}}>
-                        <h6 style={{backgroundColor:'#97bb61b3',padding:'8px 0 8px 8px'}}>Toatal Amount $32,786.00</h6>
+                        <h6 style={{backgroundColor:'#97bb61b3',padding:'8px 0 8px 8px'}}>Toatal Amount ${`${prams.amt}`}</h6>
                       <Row>
                         <Col lg={4}><label htmlFor='approve'>Approved By *</label></Col>
                         <Col lg={8}><label htmlFor='reason'>Reason *</label></Col>
