@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.css-a3l6o-MuiInputBase-root-MuiInput-root-MuiSelect-root:before , .css-a3l6o-MuiInputBase-root-MuiInput-root-MuiSelect-root::after,
+.css-a3l6o-MuiInputBase-root-MuiInput-root-MuiSelect-root{
+  border-bottom: inherit !important;
+  background-color: inherit !important;
+}
