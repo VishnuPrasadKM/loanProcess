@@ -88,7 +88,6 @@ const Data = () => {
    fetch('http://localhost:5000/api/data')
    .then(result => result.json())
    .then((rowData) => setRowData(rowData))
-   .then(console.log(typeof(rowData)))
  }, []);
 
  return (
