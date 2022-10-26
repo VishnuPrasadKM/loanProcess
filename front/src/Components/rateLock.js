@@ -17,7 +17,6 @@ const RateLock=() =>{
   const handleClose = (e) => {
     setShow(false)
     navigate('/')
-    e.preventDefault()
   };
   const handleShow = () => setShow(true);
   const handleScreen = () => setFull(false)

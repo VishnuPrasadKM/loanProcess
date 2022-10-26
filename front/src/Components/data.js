@@ -17,18 +17,19 @@ const ModalComponent = (prams) =>{
       {
         // console.log(prams.data.amount);
         let amt = prams.data.amount;
-        <Waivers amount={amt} />;
+        <RateLock amount={amt} />;
         navigate(`/ratelock/?${prams.value}`)
       }}>
         {prams.value}</a>
     </>)
 }
 
-const Data = () => {
-
+const Data = (props) => {
+ 
+ console.log(props);
  const [gridApi, setGridApi] = useState(null)
  const [gridColumnApi, setGridColumnApi] = useState(null)
- const [hideColumn, setHideColumn] = useState(true)
+ const [hideColumn, setHideColumn] = useState(false)
  const [rowData, setRowData] = useState(); // Set rowData to Array of Objects, one Object per Row
 
  // Each Column Definition results in one Column.
@@ -55,19 +56,9 @@ const Data = () => {
     setGridColumnApi(prams.columnApi);
   };
 
-  const showColumn=()=>{
-    gridColumnApi.setColumnVisible('loanNum',hideColumn)
-    gridColumnApi.setColumnVisible('name',hideColumn)
-    gridColumnApi.setColumnVisible('address',hideColumn)
-    gridColumnApi.setColumnVisible('city',hideColumn)
-    gridColumnApi.setColumnVisible('state',hideColumn)
-    gridColumnApi.setColumnVisible('amount',hideColumn)
-    gridColumnApi.setColumnVisible('type',hideColumn)
-    gridColumnApi.setColumnVisible('product',hideColumn)
-    gridColumnApi.setColumnVisible('status',hideColumn)
-    gridColumnApi.setColumnVisible('days',hideColumn)
+  const showColumn=(value)=>{
+    gridColumnApi.setColumnVisible(`${value}`,hideColumn)
     setHideColumn(!hideColumn)
-    gridApi.sizeColumnsToFit()
   }
 
  // DefaultColDef sets props common to all Columns
@@ -92,6 +83,16 @@ const Data = () => {
 
  return (
    <div>
+    <button onClick={()=>showColumn('loanNum')}>loan Number</button>
+    <button onClick={()=>showColumn('name')}>Primary Borrower</button>
+    <button onClick={()=>showColumn('address')}>Property Address</button>
+    <button onClick={()=>showColumn('city')}>City</button>
+    <button onClick={()=>showColumn('state')}>State</button>
+    <button onClick={()=>showColumn('amount')}>Loan Amount</button>
+    <button onClick={()=>showColumn('type')}>Loan Type</button>
+    <button onClick={()=>showColumn('product')}>Product</button>
+    <button onClick={()=>showColumn('false')}>Status</button>
+    <button onClick={()=>showColumn('days')}>Days</button>
 
      {/* On div wrapping Grid a) specify theme CSS Class Class and b) sets Grid size */}
      <div className="ag-theme-alpine" style={{height: 400}}>

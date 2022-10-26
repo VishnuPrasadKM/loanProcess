@@ -17,7 +17,7 @@ const LandingPage = () => {
  }
   return (
     <div>
-    <Header display/>
+    <Header/>
     <span style={{fontSize:'30px', fontWeight:'bold', padding:'15px 0 5px 40px', display:'flex'}}>All Loans</span>
    
   <form style={{boxSizing:'border-box'}}>
@@ -35,9 +35,7 @@ const LandingPage = () => {
     </div>
   </form>
     <Container>
-      <Suspense fallback={<div>Loading</div>}>
         <Data/>
-      </Suspense>
     </Container>
     </div>
   )

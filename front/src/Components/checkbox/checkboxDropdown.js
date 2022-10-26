@@ -8,11 +8,11 @@ import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import { AiOutlineAppstore } from "react-icons/ai";
 import LandingPage from '../landingPage';
+import Data from '../data';
 
 const CheckboxDropdown = () => {
 
   const [columnName, setcolumnName] = React.useState([]);
-
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -44,6 +44,10 @@ const handleChange = (event) => {
     typeof value === 'string' ? value.split(',') : value,
     console.log(value)
   );
+  const props={value}
+  return(
+    <Data {...props}/>
+  )
 };
 
 return (
