@@ -5,10 +5,10 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { Col, Container, Form, Row } from 'react-bootstrap';
-import {AiOutlineFullscreen} from 'react-icons/ai'
+import {AiOutlineFullscreenExit} from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom';
 
-const RateLock=() =>{
+const RateLockFull=() =>{
 
   const navigate = useNavigate()
   const [show, setShow] = useState(true);
@@ -17,6 +17,7 @@ const RateLock=() =>{
   const handleClose = (e) => {
     setShow(false)
     navigate('/')
+    e.preventDefault()
   };
   const handleShow = () => setShow(true);
   const handleScreen = () => setFull(false)
@@ -37,7 +38,7 @@ const RateLock=() =>{
       <>
         <div style={{display:'flex', justifyContent:'space-between'}}>
           <h3 className='pt-2'>Rate Lock</h3>
-          <button style={{alignItems:'center', background:'inherit', border:'none' }} onClick={()=>navigate('/ratelock-fullscreen')}><AiOutlineFullscreen/> FULLSCREEN</button>
+          <button style={{alignItems:'center', background:'inherit', border:'none' }} onClick={()=>navigate('/ratelock')}><AiOutlineFullscreenExit/> MINIMIZE</button>
         </div>
       </>
     )
@@ -92,7 +93,7 @@ const RateLock=() =>{
     <>
       <Header/>
       <div style={{margin:'5px 45px'}}>
-      <Modal show={show} onHide={handleClose} size='xl' centered >
+      <Modal show={show} onHide={handleClose} size='xl' centered fullscreen>
           <Container>
             <Modal.Header closeButton style={{borderBottom:0, padding:'10px 0 0 0'}}>
             <Modal.Title id="contained-modal-title-vcenter" >
@@ -118,4 +119,4 @@ const RateLock=() =>{
   );
 }
 
-export default RateLock
+export default RateLockFull
