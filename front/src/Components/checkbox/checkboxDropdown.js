@@ -25,29 +25,27 @@ const CheckboxDropdown = () => {
 };
 
 const names = [
-  'Loan Number',
-  'Primary Borrower',
-  'Property Address',
-  'City',
-  'State',
-  'Loan Amount',
-  'Loan Type',
-  'Product',
-  'Status',
-  'Days',
+  {name:'Loan Number', value:'loanNum' },
+  {name:'Primary Borrower', value:'name'},
+  {name:'Property Address', value:'address'},
+  {name:'City', value:'city'},
+  {name:'State', value:'state'},
+  {name:'Loan Amount', value:'amount'},
+  {name:'Loan Type', value:'type'},
+  {name:'Product', value:'product'},
+  {name:'Status', value:'status'},
+  {name:'Days', value:'days'},
 ];
 const handleChange = (event) => {
   const {
     target: { value },
   } = event;
+  const props={value};
+    <Data {...props}/>;
   setcolumnName(
     typeof value === 'string' ? value.split(',') : value,
     console.log(value)
   );
-  const props={value}
-  return(
-    <Data {...props}/>
-  )
 };
 
 return (
@@ -67,9 +65,9 @@ return (
         <MenuItem disabled value="">
             <em>Select to hide</em>
           </MenuItem>
-        {names.map((name) => (
-          <MenuItem key={name} value={name}>
-            <Checkbox checked={columnName.indexOf(name) > -1} />
+        {names.map(({name,value}) => (
+          <MenuItem key={name} value={value}>
+            <Checkbox checked={columnName.indexOf(value) > -1} />
             <ListItemText primary={name} />
           </MenuItem>
         ))}

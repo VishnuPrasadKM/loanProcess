@@ -26,7 +26,6 @@ const ModalComponent = (prams) =>{
 
 const Data = (props) => {
  
- console.log(props);
  const [gridApi, setGridApi] = useState(null)
  const [gridColumnApi, setGridColumnApi] = useState(null)
  const [hideColumn, setHideColumn] = useState(false)
@@ -40,7 +39,7 @@ const Data = (props) => {
       flex:1,
       cellRenderer: ModalComponent,
     },
-    {headerName:"Primary Borrower", field: "name", flex:1.2,suppressToolPanel: true},
+    {headerName:"Primary Borrower", field: "name", flex:1.2,},
     {headerName:"Property Address",field: "address", flex:1.3},
     {headerName:"City",field: "city", flex:0.7},
     {headerName:"State",field: "state", flex:0.6},
@@ -83,16 +82,16 @@ const Data = (props) => {
 
  return (
    <div>
-    <button onClick={()=>showColumn('loanNum')}>loan Number</button>
-    <button onClick={()=>showColumn('name')}>Primary Borrower</button>
-    <button onClick={()=>showColumn('address')}>Property Address</button>
-    <button onClick={()=>showColumn('city')}>City</button>
-    <button onClick={()=>showColumn('state')}>State</button>
-    <button onClick={()=>showColumn('amount')}>Loan Amount</button>
-    <button onClick={()=>showColumn('type')}>Loan Type</button>
-    <button onClick={()=>showColumn('product')}>Product</button>
-    <button onClick={()=>showColumn('false')}>Status</button>
-    <button onClick={()=>showColumn('days')}>Days</button>
+    <button className='hiddenButton' onClick={()=>showColumn('loanNum')}>loan Number</button>
+    <button className='hiddenButton' onClick={()=>showColumn('name')}>Primary Borrower</button>
+    <button className='hiddenButton' onClick={()=>showColumn('address')}>Property Address</button>
+    <button className='hiddenButton' onClick={()=>showColumn('city')}>City</button>
+    <button className='hiddenButton' onClick={()=>showColumn('state')}>State</button>
+    <button className='hiddenButton' onClick={()=>showColumn('amount')}>Loan Amount</button>
+    <button className='hiddenButton' onClick={()=>showColumn('type')}>Loan Type</button>
+    <button className='hiddenButton' onClick={()=>showColumn('product')}>Product</button>
+    <button className='hiddenButton' onClick={()=>showColumn('status')}>Status</button>
+    <button className='hiddenButton' onClick={()=>showColumn('days')}>Days</button>
 
      {/* On div wrapping Grid a) specify theme CSS Class Class and b) sets Grid size */}
      <div className="ag-theme-alpine" style={{height: 400}}>
