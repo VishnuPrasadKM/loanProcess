@@ -17,7 +17,8 @@ import { AiOutlineAppstore } from "react-icons/ai";
 const CheckboxDropdown = () => {
 
   const [columnName, setcolumnName] = useState([]);
-  let arr=[]
+  const [arr, setArr]=useState([])
+  let colStr= "\'" +(arr[0].value).join("\',\'")+"\'";
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -47,22 +48,22 @@ const handleChange = (event) => {
   } = event;
   const val={value};
     <Data {...value}/>;
-    arr={val}
+    setArr(arr=>[val])
     setcolumnName(
       typeof value === 'string' ? value.split(',') : value,
       );
-      console.log(val);
-      console.log(arr.val)
 }
+// console.log(arr);
 
-const handelSubmit = ({val}) => {
-  console.log(arr);
-  <Data />
+const handelSubmit = (arr) => {
+  // console.log(arr[0].value);
+  // let colStr= "\'" +(arr[0].value).join("\',\'")+"\'";
+  console.log(colStr);
+  <Data colStr={colStr}/>
 }
 
 return (
   <div style={{display:'flex',alignItems:'center'}}>
-    
     <FormControl sx={{ m: 1, width: 120 }}>
       <Select
         displayEmpty
@@ -108,8 +109,9 @@ const ModalComponent = (prams) =>{
     </>)
 }
 
-const Data = (props) => {
-
+const Data = ({colName}) => {
+  let col = colName
+  console.log(JSON.stringify(col))
  const [gridApi, setGridApi] = useState(null)
  const [gridColumnApi, setGridColumnApi] = useState(null)
  const [hideColumn, setHideColumn] = useState(false)
@@ -172,16 +174,6 @@ const Data = (props) => {
         <button style={{background:'inherit', border:'none'}} onClick={() => setRefresh(!refresh)}><FiRefreshCcw style={{marginRight:'8px'}}/>Refresh</button>
         <CheckboxDropdown/>
       </div>
-    {/* <button className='hiddenButton' onClick={()=>showColumn('loanNum')}>loan Number</button>
-    <button className='hiddenButton' onClick={()=>showColumn('name')}>Primary Borrower</button>
-    <button className='hiddenButton' onClick={()=>showColumn('address')}>Property Address</button>
-    <button className='hiddenButton' onClick={()=>showColumn('city')}>City</button>
-    <button className='hiddenButton' onClick={()=>showColumn('state')}>State</button>
-    <button className='hiddenButton' onClick={()=>showColumn('amount')}>Loan Amount</button>
-    <button className='hiddenButton' onClick={()=>showColumn('type')}>Loan Type</button>
-    <button className='hiddenButton' onClick={()=>showColumn('product')}>Product</button>
-    <button className='hiddenButton' onClick={()=>showColumn('status')}>Status</button>
-    <button className='hiddenButton' onClick={()=>showColumn('days')}>Days</button> */}
 
      <div className="ag-theme-alpine" style={{height: 400}}>
 
