@@ -4,7 +4,7 @@ import { Container } from 'react-bootstrap'
 import {BsSearch} from 'react-icons/bs'
 import {FiRefreshCcw} from 'react-icons/fi'
 import Header from './Reusable/header';
-import CheckboxDropdown from './checkbox/checkboxDropdown'
+import CheckboxDropdowns from './checkboxDropdown'
 import Data from './data'
 
 

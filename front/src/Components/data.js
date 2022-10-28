@@ -5,7 +5,7 @@ import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
 import 'ag-grid-community/styles/ag-theme-alpine.css'; // Optional theme CSS
 import { useNavigate } from 'react-router-dom';
 import Waivers from './waivers';
-import CheckboxDropdown from './checkbox/checkboxDropdown';
+import CheckboxDropdown from './checkboxDropdown';
 import { FiRefreshCcw } from 'react-icons/fi';
 
 
