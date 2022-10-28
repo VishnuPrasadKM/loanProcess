@@ -2,9 +2,7 @@ import React, {Suspense} from 'react'
 import './compStyles.css'
 import { Container } from 'react-bootstrap'
 import {BsSearch} from 'react-icons/bs'
-import {FiRefreshCcw} from 'react-icons/fi'
 import Header from './Reusable/header';
-import CheckboxDropdowns from './checkboxDropdown'
 import Data from './data'
 
 
