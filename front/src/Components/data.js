@@ -5,6 +5,8 @@ import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
 import 'ag-grid-community/styles/ag-theme-alpine.css'; // Optional theme CSS
 import { useNavigate } from 'react-router-dom';
 import Waivers from './waivers';
+import CheckboxDropdown from './checkbox/checkboxDropdown';
+import { FiRefreshCcw } from 'react-icons/fi';
 
 
 const ModalComponent = (prams) =>{
@@ -15,7 +17,6 @@ const ModalComponent = (prams) =>{
     <>
     <a onClick={()=>
       {
-        // console.log(prams.data.amount);
         let amt = prams.data.amount;
         <RateLock amount={amt} />;
         navigate(`/ratelock/?${prams.value}`)
@@ -25,11 +26,12 @@ const ModalComponent = (prams) =>{
 }
 
 const Data = (props) => {
- 
+
  const [gridApi, setGridApi] = useState(null)
  const [gridColumnApi, setGridColumnApi] = useState(null)
  const [hideColumn, setHideColumn] = useState(false)
  const [rowData, setRowData] = useState(); // Set rowData to Array of Objects, one Object per Row
+ const [refresh, setRefresh] = useState(false)
 
  // Each Column Definition results in one Column.
  const [columnDefs, setColumnDefs] = useState([
@@ -55,8 +57,8 @@ const Data = (props) => {
     setGridColumnApi(prams.columnApi);
   };
 
-  const showColumn=(value)=>{
-    gridColumnApi.setColumnVisible(`${value}`,hideColumn)
+  const showColumn=(colName)=>{
+    gridColumnApi.setColumnVisible(`${colName}`,hideColumn)
     setHideColumn(!hideColumn)
   }
 
@@ -75,14 +77,19 @@ const Data = (props) => {
 
  // Example load data from sever
  useEffect(() => {
+  console.log('refreshed');
    fetch('http://localhost:5000/api/data')
    .then(result => result.json())
    .then((rowData) => setRowData(rowData))
- }, []);
+ }, [refresh]);
 
  return (
    <div>
-    <button className='hiddenButton' onClick={()=>showColumn('loanNum')}>loan Number</button>
+          <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}}>
+        <button style={{background:'inherit', border:'none'}} onClick={() => setRefresh(!refresh)}><FiRefreshCcw style={{marginRight:'8px'}}/>Refresh</button>
+        <CheckboxDropdown/>
+      </div>
+    {/* <button className='hiddenButton' onClick={()=>showColumn('loanNum')}>loan Number</button>
     <button className='hiddenButton' onClick={()=>showColumn('name')}>Primary Borrower</button>
     <button className='hiddenButton' onClick={()=>showColumn('address')}>Property Address</button>
     <button className='hiddenButton' onClick={()=>showColumn('city')}>City</button>
@@ -91,9 +98,8 @@ const Data = (props) => {
     <button className='hiddenButton' onClick={()=>showColumn('type')}>Loan Type</button>
     <button className='hiddenButton' onClick={()=>showColumn('product')}>Product</button>
     <button className='hiddenButton' onClick={()=>showColumn('status')}>Status</button>
-    <button className='hiddenButton' onClick={()=>showColumn('days')}>Days</button>
+    <button className='hiddenButton' onClick={()=>showColumn('days')}>Days</button> */}
 
-     {/* On div wrapping Grid a) specify theme CSS Class Class and b) sets Grid size */}
      <div className="ag-theme-alpine" style={{height: 400}}>
 
        <AgGridReact
