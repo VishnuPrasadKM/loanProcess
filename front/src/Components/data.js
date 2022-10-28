@@ -18,7 +18,11 @@ const CheckboxDropdown = () => {
 
   const [columnName, setcolumnName] = useState([]);
   const [arr, setArr]=useState([])
-  let colStr= "\'" +(arr[0].value).join("\',\'")+"\'";
+  
+  useEffect((colStr) => {
+    <Data colStr={colStr}/>
+   }, [arr]);
+  
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -47,7 +51,7 @@ const handleChange = (event) => {
     target: { value },
   } = event;
   const val={value};
-    <Data {...value}/>;
+    // <Data {...value}/>;
     setArr(arr=>[val])
     setcolumnName(
       typeof value === 'string' ? value.split(',') : value,
@@ -57,7 +61,7 @@ const handleChange = (event) => {
 
 const handelSubmit = (arr) => {
   // console.log(arr[0].value);
-  // let colStr= "\'" +(arr[0].value).join("\',\'")+"\'";
+  const colStr= "\'" +(arr[0].value).join("\',\'")+"\'";
   console.log(colStr);
   <Data colStr={colStr}/>
 }
@@ -110,8 +114,7 @@ const ModalComponent = (prams) =>{
 }
 
 const Data = ({colName}) => {
-  let col = colName
-  console.log(JSON.stringify(col))
+
  const [gridApi, setGridApi] = useState(null)
  const [gridColumnApi, setGridColumnApi] = useState(null)
  const [hideColumn, setHideColumn] = useState(false)
@@ -142,10 +145,13 @@ const Data = ({colName}) => {
     setGridColumnApi(prams.columnApi);
   };
 
-  const showColumn=(colName)=>{
-    gridColumnApi.setColumnVisible(`${colName}`,hideColumn)
-    setHideColumn(!hideColumn)
-  }
+//   const showColumn=(colName)=>{
+//     gridColumnApi.setColumnVisible(`${colName}`,hideColumn)
+//     setHideColumn(!hideColumn)
+//   }
+// useEffect(()=>{
+//   showColumn(colName)
+// },[colName])
 
  // DefaultColDef sets props common to all Columns
  const defaultColDef = useMemo(()=>({

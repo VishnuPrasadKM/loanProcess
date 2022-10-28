@@ -12,8 +12,6 @@
     "ag-grid-community": "^28.2.0",
     "ag-grid-react": "^28.2.0",
     "bootstrap": "^5.2.2",
-    "mobox": "^1.3.11",
-    "mobx-react-lite": "^3.4.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
