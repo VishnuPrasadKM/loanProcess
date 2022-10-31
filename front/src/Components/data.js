@@ -4,8 +4,100 @@ import RateLock from './rateLock';
 import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
 import 'ag-grid-community/styles/ag-theme-alpine.css'; // Optional theme CSS
 import { useNavigate } from 'react-router-dom';
-import Waivers from './waivers';
+import { FiRefreshCcw } from 'react-icons/fi';
+import {BiHide} from 'react-icons/bi'
 
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import ListItemText from '@mui/material/ListItemText';
+import Select from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
+import { AiOutlineAppstore } from "react-icons/ai";
+
+const CheckboxDropdown = () => {
+
+  const [columnName, setcolumnName] = useState([]);
+  const [arr, setArr]=useState([])
+  
+  useEffect((colStr) => {
+    <Data colStr={colStr}/>
+   }, [arr]);
+  
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
+
+const names = [
+  {name:'Loan Number', value:'loanNum' },
+  {name:'Primary Borrower', value:'name'},
+  {name:'Property Address', value:'address'},
+  {name:'City', value:'city'},
+  {name:'State', value:'state'},
+  {name:'Loan Amount', value:'amount'},
+  {name:'Loan Type', value:'type'},
+  {name:'Product', value:'product'},
+  {name:'Status', value:'status'},
+  {name:'Days', value:'days'},
+];
+const handleChange = (event) => {
+  const {
+    target: { value },
+  } = event;
+  const val={value};
+    // <Data {...value}/>;
+    setArr(arr=>[val])
+    setcolumnName(
+      typeof value === 'string' ? value.split(',') : value,
+      );
+}
+// console.log(arr);
+
+const handelSubmit = (arr) => {
+  // console.log(arr[0].value);
+
+  sessionStorage.setItem("colHide", JSON.stringify(arr[0].value));
+  <Data data={'pass'}/>
+  // Data('data')
+  console.log("occured")
+}
+
+return (
+  <div style={{display:'flex',alignItems:'center'}}>
+    <FormControl sx={{ m: 1, width: 120 }}>
+      <Select
+        displayEmpty
+        multiple
+        value={columnName}
+        onChange={handleChange}
+        MenuProps={MenuProps}
+        variant="standard"
+        renderValue={()=>{return (<em><AiOutlineAppstore/> COLUMN</em>)}}
+        style={{outline:'none',textDecorationLine:'none'}}
+      >
+        <MenuItem disabled value="">
+            <em>Select to hide</em>
+          </MenuItem>
+        {names.map(({name,value}) => (
+          <MenuItem key={name} value={value}>
+            <Checkbox checked={columnName.indexOf(value) > -1} />
+            <ListItemText primary={name} />
+          </MenuItem>
+        ))}
+        <MenuItem>
+          <button onClick={()=>{handelSubmit(arr)}}>Confirm</button>
+        </MenuItem>
+      </Select>
+    </FormControl>
+  </div>
+);
+}
 
 const ModalComponent = (prams) =>{
 
@@ -15,7 +107,6 @@ const ModalComponent = (prams) =>{
     <>
     <a onClick={()=>
       {
-        // console.log(prams.data.amount);
         let amt = prams.data.amount;
         <RateLock amount={amt} />;
         navigate(`/ratelock/?${prams.value}`)
@@ -24,12 +115,19 @@ const ModalComponent = (prams) =>{
     </>)
 }
 
-const Data = (props) => {
- 
+
+const Data = (val) => {
+console.log('hello')
+//  let colHide = sessionStorage.getItem('colHide')
+console.log(val);
+// useEffect(()=>{
+//   console.log(val);
+// },[val])
  const [gridApi, setGridApi] = useState(null)
  const [gridColumnApi, setGridColumnApi] = useState(null)
- const [hideColumn, setHideColumn] = useState(false)
+ const [hideColumn, setHideColumn] = useState(true)
  const [rowData, setRowData] = useState(); // Set rowData to Array of Objects, one Object per Row
+ const [refresh, setRefresh] = useState(false)
 
  // Each Column Definition results in one Column.
  const [columnDefs, setColumnDefs] = useState([
@@ -55,10 +153,17 @@ const Data = (props) => {
     setGridColumnApi(prams.columnApi);
   };
 
-  const showColumn=(value)=>{
-    gridColumnApi.setColumnVisible(`${value}`,hideColumn)
+  const showColumn=()=>{
+    console.log('showColumn called')
+    let colHide = JSON.parse(sessionStorage.getItem('colHide'))
+    console.log(typeof(colHide));
+    console.log((colHide[0]));
+    gridColumnApi.setColumnsVisible(colHide, hideColumn)
     setHideColumn(!hideColumn)
   }
+// useEffect(()=>{
+//   
+// },[colName])
 
  // DefaultColDef sets props common to all Columns
  const defaultColDef = useMemo(()=>({
@@ -75,25 +180,20 @@ const Data = (props) => {
 
  // Example load data from sever
  useEffect(() => {
+  console.log('refreshed');
    fetch('http://localhost:5000/api/data')
    .then(result => result.json())
    .then((rowData) => setRowData(rowData))
- }, []);
+ }, [refresh]);
 
  return (
    <div>
-    <button className='hiddenButton' onClick={()=>showColumn('loanNum')}>loan Number</button>
-    <button className='hiddenButton' onClick={()=>showColumn('name')}>Primary Borrower</button>
-    <button className='hiddenButton' onClick={()=>showColumn('address')}>Property Address</button>
-    <button className='hiddenButton' onClick={()=>showColumn('city')}>City</button>
-    <button className='hiddenButton' onClick={()=>showColumn('state')}>State</button>
-    <button className='hiddenButton' onClick={()=>showColumn('amount')}>Loan Amount</button>
-    <button className='hiddenButton' onClick={()=>showColumn('type')}>Loan Type</button>
-    <button className='hiddenButton' onClick={()=>showColumn('product')}>Product</button>
-    <button className='hiddenButton' onClick={()=>showColumn('status')}>Status</button>
-    <button className='hiddenButton' onClick={()=>showColumn('days')}>Days</button>
+          <div style={{display:'flex', alignItems:'center', justifyContent:'flex-end'}}>
+            <CheckboxDropdown/>
+            <button style={{background:'inherit', border:'none'}} onClick={() => setRefresh(!refresh)}><FiRefreshCcw style={{marginRight:'8px'}}/></button>
+            <button onClick={showColumn} style={{background:'inherit', border:'none'}}><BiHide/></button>
+        </div>
 
-     {/* On div wrapping Grid a) specify theme CSS Class Class and b) sets Grid size */}
      <div className="ag-theme-alpine" style={{height: 400}}>
 
        <AgGridReact
@@ -115,5 +215,8 @@ const Data = (props) => {
    </div>
  );
 };
+window.onunload = function(){
+sessionStorage.removeItem('colHide')
+}
 
 export default Data;

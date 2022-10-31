@@ -2,11 +2,8 @@ import React, {Suspense} from 'react'
 import './compStyles.css'
 import { Container } from 'react-bootstrap'
 import {BsSearch} from 'react-icons/bs'
-import {FiRefreshCcw} from 'react-icons/fi'
 import Header from './Reusable/header';
-import CheckboxDropdown from './checkbox/checkboxDropdown'
-
-const Data = React.lazy(() => import("./data"));
+import Data from './data'
 
 
 const LandingPage = () => {
@@ -28,10 +25,10 @@ const LandingPage = () => {
     </div>
     <button className='greyButton' style={{width:'8%', height:'35px', marginLeft:'25px'}} onClick={Click}><BsSearch/>  Search</button>
     <div style={{marginLeft:'30%'}}>
-      <div style={{display:'flex', alignItems:'center'}}>
+      {/* <div style={{display:'flex', alignItems:'center'}}>
         <button style={{background:'inherit', border:'none'}} onClick={() => window.location.reload(false)}><FiRefreshCcw style={{marginRight:'8px'}}/>Refresh</button>
         <CheckboxDropdown/>
-      </div>
+      </div> */}
     </div>
   </form>
     <Container>
