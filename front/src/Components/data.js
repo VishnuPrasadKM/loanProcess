@@ -188,7 +188,7 @@ console.log(val);
 
  return (
    <div>
-          <div style={{display:'flex', alignItems:'center', justifyContent:'flex-end'}}>
+          <div style={{display:'flex', alignItems:'baseline' , justifyContent:'flex-end'}}>
             <CheckboxDropdown/>
             <button style={{background:'inherit', border:'none'}} onClick={() => setRefresh(!refresh)}><FiRefreshCcw style={{marginRight:'8px'}}/></button>
             <button onClick={showColumn} style={{background:'inherit', border:'none'}}><BiHide/></button>
