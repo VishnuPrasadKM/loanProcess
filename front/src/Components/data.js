@@ -5,7 +5,7 @@ import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
 import 'ag-grid-community/styles/ag-theme-alpine.css'; // Optional theme CSS
 import { useNavigate } from 'react-router-dom';
 import { FiRefreshCcw } from 'react-icons/fi';
-
+import {BiHide} from 'react-icons/bi'
 
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -61,9 +61,11 @@ const handleChange = (event) => {
 
 const handelSubmit = (arr) => {
   // console.log(arr[0].value);
-  const colStr= "\'" +(arr[0].value).join("\',\'")+"\'";
-  console.log(colStr);
-  <Data colStr={colStr}/>
+
+  sessionStorage.setItem("colHide", JSON.stringify(arr[0].value));
+  <Data data={'pass'}/>
+  // Data('data')
+  console.log("occured")
 }
 
 return (
@@ -113,11 +115,17 @@ const ModalComponent = (prams) =>{
     </>)
 }
 
-const Data = ({colName}) => {
 
+const Data = (val) => {
+console.log('hello')
+//  let colHide = sessionStorage.getItem('colHide')
+console.log(val);
+// useEffect(()=>{
+//   console.log(val);
+// },[val])
  const [gridApi, setGridApi] = useState(null)
  const [gridColumnApi, setGridColumnApi] = useState(null)
- const [hideColumn, setHideColumn] = useState(false)
+ const [hideColumn, setHideColumn] = useState(true)
  const [rowData, setRowData] = useState(); // Set rowData to Array of Objects, one Object per Row
  const [refresh, setRefresh] = useState(false)
 
@@ -145,12 +153,16 @@ const Data = ({colName}) => {
     setGridColumnApi(prams.columnApi);
   };
 
-//   const showColumn=(colName)=>{
-//     gridColumnApi.setColumnVisible(`${colName}`,hideColumn)
-//     setHideColumn(!hideColumn)
-//   }
+  const showColumn=()=>{
+    console.log('showColumn called')
+    let colHide = JSON.parse(sessionStorage.getItem('colHide'))
+    console.log(typeof(colHide));
+    console.log((colHide[0]));
+    gridColumnApi.setColumnsVisible(colHide, hideColumn)
+    setHideColumn(!hideColumn)
+  }
 // useEffect(()=>{
-//   showColumn(colName)
+//   
 // },[colName])
 
  // DefaultColDef sets props common to all Columns
@@ -176,10 +188,11 @@ const Data = ({colName}) => {
 
  return (
    <div>
-          <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}}>
-        <button style={{background:'inherit', border:'none'}} onClick={() => setRefresh(!refresh)}><FiRefreshCcw style={{marginRight:'8px'}}/>Refresh</button>
-        <CheckboxDropdown/>
-      </div>
+          <div style={{display:'flex', alignItems:'center', justifyContent:'flex-end'}}>
+            <CheckboxDropdown/>
+            <button style={{background:'inherit', border:'none'}} onClick={() => setRefresh(!refresh)}><FiRefreshCcw style={{marginRight:'8px'}}/></button>
+            <button onClick={showColumn} style={{background:'inherit', border:'none'}}><BiHide/></button>
+        </div>
 
      <div className="ag-theme-alpine" style={{height: 400}}>
 
@@ -202,5 +215,8 @@ const Data = ({colName}) => {
    </div>
  );
 };
+window.onunload = function(){
+sessionStorage.removeItem('colHide')
+}
 
 export default Data;
