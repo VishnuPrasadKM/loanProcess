@@ -31,9 +31,9 @@ const LandingPage = () => {
       </div> */}
     </div>
   </form>
-    {/* <Container>
+    <Container>
         <Data/>
-    </Container> */}
+    </Container>
     </div>
   )
 }

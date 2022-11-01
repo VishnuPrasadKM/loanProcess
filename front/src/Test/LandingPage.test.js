@@ -1,6 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { render, screen, cleanup } from '@testing-library/react';
 import LandingPage from '../Components/landingPage';
 
+afterEach(cleanup)
 test('render search box', () => {
   render(<LandingPage />);
   const searchBox = screen.getByRole("searchbox");
