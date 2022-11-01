@@ -19,7 +19,7 @@ const LandingPage = () => {
    
   <form style={{boxSizing:'border-box'}}>
     <div className="field">
-      <input type="text" name="serch" id="search" 
+      <input type="search" name="serch" id="search" 
         placeholder="Loan # | Pool Name | Pool ID | Client Name | Property Address"/>
       <label htmlFor="search">Search</label>
     </div>
@@ -31,9 +31,9 @@ const LandingPage = () => {
       </div> */}
     </div>
   </form>
-    <Container>
+    {/* <Container>
         <Data/>
-    </Container>
+    </Container> */}
     </div>
   )
 }
