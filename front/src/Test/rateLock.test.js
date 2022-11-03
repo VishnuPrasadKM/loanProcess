@@ -1,11 +1,9 @@
 import React from 'react';
 import {BrowserRouter, Router} from 'react-router-dom';
 import userEvent from "@testing-library/user-event";
-import {createMemoryHistory} from 'history'
 import { render, screen, cleanup } from '@testing-library/react';
 import RateLock from '../Components/rateLock';
 
-let history = createMemoryHistory();
 afterEach(cleanup)
 test('input fields',()=>{
     render(<BrowserRouter><RateLock/></BrowserRouter>);

@@ -75,7 +75,7 @@ return (
             <em>Select and Confirm</em>
           </MenuItem>
         {names.map(({name,value}) => (
-          <MenuItem key={name} value={value} data-testid='checkbox option'>
+          <MenuItem key={name} value={value} data-testid='checkbox-option'>
             <Checkbox checked={columnName.indexOf(value) > -1} data-testid='checkbox'/>
             <ListItemText primary={name} />
           </MenuItem>

@@ -11,28 +11,15 @@ test('dropdown', () => {
 });
 
 test("increments counter", () => {
-    // render the component on virtual dom
     render(<CheckboxDropdown />);
-    
-    //select the elements you want to interact with
     let dropdownButton = screen.getByTestId("dropdown");
-    // const checkbox = screen.getByTestId("increment");
-    userEvent.click(screen.getByTestId('dropdown'))
-    expect(
-        screen.getByRole("button", {
-            name: "Flyout button",
-            expanded: true,
-        })
-    ).toBeInTheDocument();
-    
-    // act(() => {
-    //     // button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-    //     //interact with those elements
-    //     dropdownButton.dispatchEvent(new MouseEvent("click"));
-    //   });
-    
-    // //assert the expected result
-    // expect(onChange).toHaveBeenCalledTimes(1);
-    // expect(dropdownButton.innerHTML).toHave(screen.getByRole('checkbox'));
-    // // expect(dropdown).toHave(screen.getByRole('checkbox'));
-    });
+    userEvent.click(dropdownButton)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+});
+
+test("Check checkbox defined", () => {
+    render(<CheckboxDropdown />);
+    let dropdownButton = screen.getByTestId("dropdown");
+    userEvent.click(dropdownButton)
+    expect(userEvent.click(screen.getByRole('button'))).toBeDefined()
+});
