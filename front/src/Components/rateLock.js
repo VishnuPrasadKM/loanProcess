@@ -37,7 +37,7 @@ const RateLock=() =>{
       <>
         <div style={{display:'flex', justifyContent:'space-between'}}>
           <h3 className='pt-2'>Rate Lock</h3>
-          <button style={{alignItems:'center', background:'inherit', border:'none' }} onClick={()=>navigate('/ratelock-fullscreen')}><AiOutlineFullscreen/> FULLSCREEN</button>
+          <button data-testid='fs-redirect' style={{alignItems:'center', background:'inherit', border:'none' }} onClick={()=>navigate('/ratelock-fullscreen')}><AiOutlineFullscreen/> FULLSCREEN</button>
         </div>
       </>
     )
@@ -104,10 +104,10 @@ const RateLock=() =>{
               {ModalBody()}
             </Modal.Body>
             <Modal.Footer style={{borderTop:0}}>
-              <Button variant="secondary" onClick={handleClose}>
+              <Button variant="secondary" data-testid='cancel' onClick={handleClose}>
                 CANCEL
               </Button>
-              <Button type='submit' form='rateLock'  onClick={handleClose}>
+              <Button type='submit' form='rateLock'  onClick={handleClose} data-testid='save'>
                 SAVE CHANGES
               </Button>
             </Modal.Footer>

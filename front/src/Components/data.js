@@ -73,9 +73,6 @@ const Data = () => {
       setHideColumn(!hideColumn)
     }
   }
-// useEffect(()=>{
-//   
-// },[colName])
 
  // DefaultColDef sets props common to all Columns
  const defaultColDef = useMemo(()=>({
@@ -93,16 +90,20 @@ const Data = () => {
  // Example load data from sever
  useEffect(() => {
   console.log('refreshed');
-   fetch('http://localhost:5000/api/data')
-   .then(result => result.json())
-   .then((rowData) => setRowData(rowData))
+  fetchData()
   //  sessionStorage.removeItem('colHide')
  }, [refresh]);
+
+    const fetchData=()=>{
+      fetch('http://localhost:5000/api/data')
+      .then(result => result.json())
+      .then((rowData) => setRowData(rowData))
+    }
 
  return (
    <div>
           <div style={{display:'flex', alignItems:'baseline' , justifyContent:'flex-end'}}>
-            <CheckboxDropdown/>
+            {/* <CheckboxDropdown/> */}
             <button style={{background:'inherit', border:'none'}} onClick={() => setRefresh(!refresh)}><FiRefreshCcw style={{marginRight:'8px'}}/></button>
             <button onClick={showColumn} style={{background:'inherit', border:'none'}}><BiHide/></button>
         </div>

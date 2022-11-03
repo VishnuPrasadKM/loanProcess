@@ -69,13 +69,14 @@ return (
         variant="standard"
         renderValue={()=>{return (<em><AiOutlineAppstore/> COLUMN</em>)}}
         style={{outline:'none',textDecorationLine:'none'}}
+        data-testid='dropdown'
       >
         <MenuItem disabled value="">
             <em>Select and Confirm</em>
           </MenuItem>
         {names.map(({name,value}) => (
-          <MenuItem key={name} value={value}>
-            <Checkbox checked={columnName.indexOf(value) > -1} />
+          <MenuItem key={name} value={value} data-testid='checkbox option'>
+            <Checkbox checked={columnName.indexOf(value) > -1} data-testid='checkbox'/>
             <ListItemText primary={name} />
           </MenuItem>
         ))}
