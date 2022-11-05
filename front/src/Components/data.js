@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback} from 'react';
 import { AgGridReact } from 'ag-grid-react'; // the AG Grid React Component
 import RateLock from './rateLock';
-import CheckboxDropdown from './CheckboxDropdown';
+// import CheckboxDropdown from './CheckboxDropdown';
 import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
 import 'ag-grid-community/styles/ag-theme-alpine.css'; // Optional theme CSS
 import { useNavigate } from 'react-router-dom';
@@ -29,9 +29,6 @@ const Data = () => {
 // console.log('hello')
 //  let colHide = sessionStorage.getItem('colHide')
 
-// useEffect(()=>{
-//   console.log(val);
-// },[val])
  const [gridApi, setGridApi] = useState(null)
  const [gridColumnApi, setGridColumnApi] = useState(null)
  const [hideColumn, setHideColumn] = useState(false)
@@ -82,14 +79,14 @@ const Data = () => {
    }));
 
  // Example of consuming Grid Event
- const cellClickedListener = useCallback( event => {
-   console.log('cellClicked', event);
-   console.log(event.data.amount)
- }, []);
+//  const cellClickedListener = useCallback( event => {
+//    console.log('cellClicked', event);
+//    console.log(event.data.amount)
+//  }, []);
 
  // Example load data from sever
  useEffect(() => {
-  console.log('refreshed');
+  // console.log('refreshed');
   fetchData()
   //  sessionStorage.removeItem('colHide')
  }, [refresh]);
@@ -116,7 +113,7 @@ const Data = () => {
            columnDefs={columnDefs} // Column Defs for Columns
            defaultColDef={defaultColDef} // Default Column Properties
             rowSelection='single' // Options - allows click selection of rows
-           onCellClicked={cellClickedListener} // Optional - registering for Grid Event
+          //  onCellClicked={cellClickedListener} // Optional - registering for Grid Event
 
         //    rowGroupPanelShow={'always'}
            pivotPanelShow={'always'}

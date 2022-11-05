@@ -2,7 +2,6 @@ import React from 'react'
 import './compStyles.css'
 import { Container } from 'react-bootstrap'
 import {BsSearch} from 'react-icons/bs'
-import {FiRefreshCcw} from 'react-icons/fi'
 import CheckboxDropdown from './CheckboxDropdown'
 import Header from './Reusable/header';
 import Data from './data'
@@ -25,11 +24,10 @@ const LandingPage = () => {
         placeholder="Loan # | Pool Name | Pool ID | Client Name | Property Address"/>
       <label htmlFor="search">Search</label>
     </div>
-    <button type='submit' className='greyButton' style={{width:'8%', height:'35px', marginLeft:'25px'}} onClick={Click}><BsSearch/>  Search</button>
+    <button data-tesid='search-button' type='submit' className='greyButton' style={{width:'8%', height:'35px', marginLeft:'25px'}} onClick={Click}><BsSearch/>  Search</button>
     <div style={{marginLeft:'30%'}}>
       <div style={{display:'flex', alignItems:'center'}}>
-        {/* <button style={{background:'inherit', border:'none'}} onClick={() => window.location.reload(false)}><FiRefreshCcw style={{marginRight:'8px'}}/>Refresh</button> */}
-        <CheckboxDropdown/>
+        <CheckboxDropdown data-tesid='dropdown-check'/>
       </div>
     </div>
   </form>

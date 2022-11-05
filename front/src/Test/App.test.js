@@ -8,8 +8,13 @@ test('renders Header', () => {
   const headerName = screen.getByText(/Logo/i);
   expect(headerName).toBeInTheDocument();
 });
-
 test('renders project title', () => {
+  render(<Header />);
+  const seperater = screen.getByText('|');
+  expect(seperater).toBeInTheDocument();
+});
+
+test('renders project sperator', () => {
   render(<Header />);
   const title = screen.getByText(/project name/i);
   expect(title).toBeInTheDocument();
