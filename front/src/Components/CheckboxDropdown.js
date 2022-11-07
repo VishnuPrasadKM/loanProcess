@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo, useCallback} from 'react';    
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import { AiOutlineAppstore } from "react-icons/ai";
-import Data from './data';
 
 const CheckboxDropdown = () => {
 
-  const [columnName, setcolumnName] = React.useState([]);
+  const [columnName, setcolumnName] = useState([]);
+  const [arr, setArr]=useState([])
+  
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -20,11 +21,6 @@ const CheckboxDropdown = () => {
       },
     },
   };
-  
-  // useEffect(()=>{
-  //   handelSubmit()
-  //   console.log('render');
-  // },[columnName])
 
 const names = [
   {name:'Loan Number', value:'loanNum' },
@@ -38,55 +34,54 @@ const names = [
   {name:'Status', value:'status'},
   {name:'Days', value:'days'},
 ];
-const handleChange = (event) => {
+const HandleChange = (event) => {
   const {
     target: { value },
   } = event;
   const val={value};
-  let props =[];
-    <Data {...props}/>;
+    // <Data {...value}/>;
+    setArr(arr=>[val])
     setcolumnName(
       typeof value === 'string' ? value.split(',') : value,
       );
-      console.log(val);
-      props = typeof value === 'string' ? value.split(',') : value
-      console.log(props);
-      return(
-        handelSubmit(props)
-      )
-      event.preventDefault()
+        // handelSubmit(arr)
 }
 
-const handelSubmit = (props) => {
-  console.log(props);
-  <Data props={props}/>
+// console.log(arr);
+
+const handelSubmit = (arr) => {
+//   console.log(arr[0].value);
+  sessionStorage.setItem("colHide", JSON.stringify(arr[0].value));
+//   <Data data={'pass'}/>
+  // Data('data')
+//   console.log("occured")
 }
 
 return (
   <div style={{display:'flex',alignItems:'center'}}>
-    
     <FormControl sx={{ m: 1, width: 120 }}>
       <Select
         displayEmpty
         multiple
         value={columnName}
-        onChange={handleChange}
+        onChange={HandleChange}
         MenuProps={MenuProps}
         variant="standard"
         renderValue={()=>{return (<em><AiOutlineAppstore/> COLUMN</em>)}}
         style={{outline:'none',textDecorationLine:'none'}}
+        data-testid='dropdown'
       >
         <MenuItem disabled value="">
-            <em>Select to hide</em>
+            <em>Select and Confirm</em>
           </MenuItem>
         {names.map(({name,value}) => (
-          <MenuItem key={name} value={value}>
-            <Checkbox checked={columnName.indexOf(value) > -1} />
+          <MenuItem key={name} value={value} data-testid='checkbox-option'>
+            <Checkbox checked={columnName.indexOf(value) > -1} data-testid='checkbox'/>
             <ListItemText primary={name} />
           </MenuItem>
         ))}
         <MenuItem>
-          <button onClick={()=>{handelSubmit()}}>Confirm</button>
+          <button onClick={()=>{handelSubmit(arr)}}>Confirm</button>
         </MenuItem>
       </Select>
     </FormControl>
@@ -94,4 +89,4 @@ return (
 );
 }
 
-export default CheckboxDropdown
+export default CheckboxDropdown;

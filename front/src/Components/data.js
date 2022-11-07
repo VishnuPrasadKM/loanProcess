@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useMemo, useCallback} from 'react';
 import { AgGridReact } from 'ag-grid-react'; // the AG Grid React Component
 import RateLock from './rateLock';
+// import CheckboxDropdown from './CheckboxDropdown';
 import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
 import 'ag-grid-community/styles/ag-theme-alpine.css'; // Optional theme CSS
 import { useNavigate } from 'react-router-dom';
-import Waivers from './waivers';
-import CheckboxDropdown from './checkboxDropdown';
 import { FiRefreshCcw } from 'react-icons/fi';
-
+import {BiHide} from 'react-icons/bi'
 
 const ModalComponent = (prams) =>{
 
@@ -25,7 +24,10 @@ const ModalComponent = (prams) =>{
     </>)
 }
 
-const Data = (props) => {
+
+const Data = () => {
+// console.log('hello')
+//  let colHide = sessionStorage.getItem('colHide')
 
  const [gridApi, setGridApi] = useState(null)
  const [gridColumnApi, setGridColumnApi] = useState(null)
@@ -57,9 +59,16 @@ const Data = (props) => {
     setGridColumnApi(prams.columnApi);
   };
 
-  const showColumn=(colName)=>{
-    gridColumnApi.setColumnVisible(`${colName}`,hideColumn)
-    setHideColumn(!hideColumn)
+  const showColumn=()=>{
+    let colHide = JSON.parse(sessionStorage.getItem('colHide'))
+    // console.log(JSON.stringify(colHide))
+      if((JSON.stringify(colHide)) === '[]'){
+        alert('Please Select any Option')
+      }
+      else{
+      gridColumnApi.setColumnsVisible(colHide, hideColumn)
+      setHideColumn(!hideColumn)
+    }
   }
 
  // DefaultColDef sets props common to all Columns
@@ -70,35 +79,31 @@ const Data = (props) => {
    }));
 
  // Example of consuming Grid Event
- const cellClickedListener = useCallback( event => {
-   console.log('cellClicked', event);
-   console.log(event.data.amount)
- }, []);
+//  const cellClickedListener = useCallback( event => {
+//    console.log('cellClicked', event);
+//    console.log(event.data.amount)
+//  }, []);
 
  // Example load data from sever
  useEffect(() => {
-  console.log('refreshed');
-   fetch('http://localhost:5000/api/data')
-   .then(result => result.json())
-   .then((rowData) => setRowData(rowData))
+  // console.log('refreshed');
+  fetchData()
+  //  sessionStorage.removeItem('colHide')
  }, [refresh]);
+
+    const fetchData=()=>{
+      fetch('http://localhost:5000/api/data')
+      .then(result => result.json())
+      .then((rowData) => setRowData(rowData))
+    }
 
  return (
    <div>
-          <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}}>
-        <button style={{background:'inherit', border:'none'}} onClick={() => setRefresh(!refresh)}><FiRefreshCcw style={{marginRight:'8px'}}/>Refresh</button>
-        <CheckboxDropdown/>
-      </div>
-    {/* <button className='hiddenButton' onClick={()=>showColumn('loanNum')}>loan Number</button>
-    <button className='hiddenButton' onClick={()=>showColumn('name')}>Primary Borrower</button>
-    <button className='hiddenButton' onClick={()=>showColumn('address')}>Property Address</button>
-    <button className='hiddenButton' onClick={()=>showColumn('city')}>City</button>
-    <button className='hiddenButton' onClick={()=>showColumn('state')}>State</button>
-    <button className='hiddenButton' onClick={()=>showColumn('amount')}>Loan Amount</button>
-    <button className='hiddenButton' onClick={()=>showColumn('type')}>Loan Type</button>
-    <button className='hiddenButton' onClick={()=>showColumn('product')}>Product</button>
-    <button className='hiddenButton' onClick={()=>showColumn('status')}>Status</button>
-    <button className='hiddenButton' onClick={()=>showColumn('days')}>Days</button> */}
+          <div style={{display:'flex', alignItems:'baseline' , justifyContent:'flex-end'}}>
+            {/* <CheckboxDropdown/> */}
+            <button style={{background:'inherit', border:'none'}} onClick={() => setRefresh(!refresh)}><FiRefreshCcw style={{marginRight:'8px'}}/></button>
+            <button onClick={showColumn} style={{background:'inherit', border:'none'}}><BiHide/></button>
+        </div>
 
      <div className="ag-theme-alpine" style={{height: 400}}>
 
@@ -108,7 +113,7 @@ const Data = (props) => {
            columnDefs={columnDefs} // Column Defs for Columns
            defaultColDef={defaultColDef} // Default Column Properties
             rowSelection='single' // Options - allows click selection of rows
-           onCellClicked={cellClickedListener} // Optional - registering for Grid Event
+          //  onCellClicked={cellClickedListener} // Optional - registering for Grid Event
 
         //    rowGroupPanelShow={'always'}
            pivotPanelShow={'always'}
@@ -121,5 +126,8 @@ const Data = (props) => {
    </div>
  );
 };
+window.onunload = function(){
+sessionStorage.removeItem('colHide')
+}
 
 export default Data;

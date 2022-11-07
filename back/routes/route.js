@@ -8,6 +8,16 @@ router.get('/', async(req, res) =>{
 
     res.status(200).json(data)
 });
+
+router.get("/:loanNum", async (req, res) => {
+    try {
+      const data = await Data.find({ loanNum: req.params.loanNum })
+      res.send(data);
+    } catch (error) {
+      return res.status(400).json(error);
+    }
+  });
+
 // Create data
 router.post('/', async(req, res) =>{
     const newData = new Data({
