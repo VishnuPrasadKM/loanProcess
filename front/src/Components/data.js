@@ -11,14 +11,23 @@ import {BiHide} from 'react-icons/bi'
 const ModalComponent = (prams) =>{
 
   const navigate = useNavigate();
-
+  // const [click, setClick] = useState(false)
     return(
     <>
     <a onClick={()=>
       {
-        let amt = prams.data.amount;
-        <RateLock amount={amt} />;
-        navigate(`/ratelock/?${prams.value}`)
+        // let amt = prams.data.amount;
+        console.log(prams.data);
+        let data = prams.data;
+        console.log(typeof(data));
+        alert('data passing');
+        <RateLock {...data} />;
+        alert('data passed');
+        // console.log(prams)
+        // console.log(prams.data._id)
+        // setClick(true)
+        window.sessionStorage.setItem('clicked', true)
+        navigate(`/ratelock/?${prams.data._id}`)
       }}>
         {prams.value}</a>
     </>)
@@ -80,8 +89,10 @@ const Data = () => {
 
  // Example of consuming Grid Event
 //  const cellClickedListener = useCallback( event => {
-//    console.log('cellClicked', event);
-//    console.log(event.data.amount)
+//   //  console.log('cellClicked', event);
+//   //  console.log(event.data.amount)
+//   //  console.log(event.data._id)
+//   //  window.sessionStorage.setItem(event.data._id)
 //  }, []);
 
  // Example load data from sever
@@ -127,7 +138,7 @@ const Data = () => {
  );
 };
 window.onunload = function(){
-sessionStorage.removeItem('colHide')
+sessionStorage.clear()
 }
 
 export default Data;
