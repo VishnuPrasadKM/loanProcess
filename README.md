@@ -8,3 +8,6 @@
 
 ### To start App
 ***npm start***
+
+### To Run Test
+***npm test***
