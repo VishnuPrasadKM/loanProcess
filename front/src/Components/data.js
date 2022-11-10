@@ -1,131 +1,44 @@
 import React, { useState, useEffect, useMemo, useCallback} from 'react';
 import { AgGridReact } from 'ag-grid-react'; // the AG Grid React Component
 import RateLock from './rateLock';
+// import CheckboxDropdown from './CheckboxDropdown';
 import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
 import 'ag-grid-community/styles/ag-theme-alpine.css'; // Optional theme CSS
 import { useNavigate } from 'react-router-dom';
 import { FiRefreshCcw } from 'react-icons/fi';
 import {BiHide} from 'react-icons/bi'
 
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import ListItemText from '@mui/material/ListItemText';
-import Select from '@mui/material/Select';
-import Checkbox from '@mui/material/Checkbox';
-import { AiOutlineAppstore } from "react-icons/ai";
-
-const CheckboxDropdown = () => {
-
-  const [columnName, setcolumnName] = useState([]);
-  const [arr, setArr]=useState([])
-  
-  useEffect((colStr) => {
-    <Data colStr={colStr}/>
-   }, [arr]);
-  
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-      },
-    },
-  };
-
-const names = [
-  {name:'Loan Number', value:'loanNum' },
-  {name:'Primary Borrower', value:'name'},
-  {name:'Property Address', value:'address'},
-  {name:'City', value:'city'},
-  {name:'State', value:'state'},
-  {name:'Loan Amount', value:'amount'},
-  {name:'Loan Type', value:'type'},
-  {name:'Product', value:'product'},
-  {name:'Status', value:'status'},
-  {name:'Days', value:'days'},
-];
-const handleChange = (event) => {
-  const {
-    target: { value },
-  } = event;
-  const val={value};
-    // <Data {...value}/>;
-    setArr(arr=>[val])
-    setcolumnName(
-      typeof value === 'string' ? value.split(',') : value,
-      );
-}
-// console.log(arr);
-
-const handelSubmit = (arr) => {
-  // console.log(arr[0].value);
-
-  sessionStorage.setItem("colHide", JSON.stringify(arr[0].value));
-  <Data data={'pass'}/>
-  // Data('data')
-  console.log("occured")
-}
-
-return (
-  <div style={{display:'flex',alignItems:'center'}}>
-    <FormControl sx={{ m: 1, width: 120 }}>
-      <Select
-        displayEmpty
-        multiple
-        value={columnName}
-        onChange={handleChange}
-        MenuProps={MenuProps}
-        variant="standard"
-        renderValue={()=>{return (<em><AiOutlineAppstore/> COLUMN</em>)}}
-        style={{outline:'none',textDecorationLine:'none'}}
-      >
-        <MenuItem disabled value="">
-            <em>Select to hide</em>
-          </MenuItem>
-        {names.map(({name,value}) => (
-          <MenuItem key={name} value={value}>
-            <Checkbox checked={columnName.indexOf(value) > -1} />
-            <ListItemText primary={name} />
-          </MenuItem>
-        ))}
-        <MenuItem>
-          <button onClick={()=>{handelSubmit(arr)}}>Confirm</button>
-        </MenuItem>
-      </Select>
-    </FormControl>
-  </div>
-);
-}
-
 const ModalComponent = (prams) =>{
 
   const navigate = useNavigate();
-
+  // const [click, setClick] = useState(false)
     return(
     <>
     <a onClick={()=>
       {
-        let amt = prams.data.amount;
-        <RateLock amount={amt} />;
-        navigate(`/ratelock/?${prams.value}`)
+        // let amt = prams.data.amount;
+        console.log(prams.data);
+        let data = prams.data;
+        console.log(typeof(data));
+        <RateLock {...data} />;
+        // console.log(prams)
+        // console.log(prams.data._id)
+        // setClick(true)
+        window.sessionStorage.setItem('clicked', true)
+        navigate(`/ratelock/?${prams.data._id}`)
       }}>
         {prams.value}</a>
     </>)
 }
 
 
-const Data = (val) => {
-console.log('hello')
+const Data = () => {
+// console.log('hello')
 //  let colHide = sessionStorage.getItem('colHide')
-console.log(val);
-// useEffect(()=>{
-//   console.log(val);
-// },[val])
+
  const [gridApi, setGridApi] = useState(null)
  const [gridColumnApi, setGridColumnApi] = useState(null)
- const [hideColumn, setHideColumn] = useState(true)
+ const [hideColumn, setHideColumn] = useState(false)
  const [rowData, setRowData] = useState(); // Set rowData to Array of Objects, one Object per Row
  const [refresh, setRefresh] = useState(false)
 
@@ -154,16 +67,16 @@ console.log(val);
   };
 
   const showColumn=()=>{
-    console.log('showColumn called')
     let colHide = JSON.parse(sessionStorage.getItem('colHide'))
-    console.log(typeof(colHide));
-    console.log((colHide[0]));
-    gridColumnApi.setColumnsVisible(colHide, hideColumn)
-    setHideColumn(!hideColumn)
+    // console.log(JSON.stringify(colHide))
+      if((JSON.stringify(colHide)) === '[]'){
+        alert('Please Select any Option')
+      }
+      else{
+      gridColumnApi.setColumnsVisible(colHide, hideColumn)
+      setHideColumn(!hideColumn)
+    }
   }
-// useEffect(()=>{
-//   
-// },[colName])
 
  // DefaultColDef sets props common to all Columns
  const defaultColDef = useMemo(()=>({
@@ -173,23 +86,30 @@ console.log(val);
    }));
 
  // Example of consuming Grid Event
- const cellClickedListener = useCallback( event => {
-   console.log('cellClicked', event);
-   console.log(event.data.amount)
- }, []);
+//  const cellClickedListener = useCallback( event => {
+//   //  console.log('cellClicked', event);
+//   //  console.log(event.data.amount)
+//   //  console.log(event.data._id)
+//   //  window.sessionStorage.setItem(event.data._id)
+//  }, []);
 
  // Example load data from sever
  useEffect(() => {
-  console.log('refreshed');
-   fetch('http://localhost:5000/api/data')
-   .then(result => result.json())
-   .then((rowData) => setRowData(rowData))
+  // console.log('refreshed');
+  fetchData()
+  //  sessionStorage.removeItem('colHide')
  }, [refresh]);
+
+    const fetchData=()=>{
+      fetch('http://localhost:5000/api/data')
+      .then(result => result.json())
+      .then((rowData) => setRowData(rowData))
+    }
 
  return (
    <div>
           <div style={{display:'flex', alignItems:'baseline' , justifyContent:'flex-end'}}>
-            <CheckboxDropdown/>
+            {/* <CheckboxDropdown/> */}
             <button style={{background:'inherit', border:'none'}} onClick={() => setRefresh(!refresh)}><FiRefreshCcw style={{marginRight:'8px'}}/></button>
             <button onClick={showColumn} style={{background:'inherit', border:'none'}}><BiHide/></button>
         </div>
@@ -202,7 +122,7 @@ console.log(val);
            columnDefs={columnDefs} // Column Defs for Columns
            defaultColDef={defaultColDef} // Default Column Properties
             rowSelection='single' // Options - allows click selection of rows
-           onCellClicked={cellClickedListener} // Optional - registering for Grid Event
+          //  onCellClicked={cellClickedListener} // Optional - registering for Grid Event
 
         //    rowGroupPanelShow={'always'}
            pivotPanelShow={'always'}
@@ -216,7 +136,7 @@ console.log(val);
  );
 };
 window.onunload = function(){
-sessionStorage.removeItem('colHide')
+sessionStorage.clear()
 }
 
 export default Data;

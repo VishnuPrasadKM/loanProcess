@@ -8,20 +8,47 @@ import { Col, Container, Form, Row } from 'react-bootstrap';
 import {AiOutlineFullscreen} from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom';
 
-const RateLock=() =>{
+const RateLock=(data) =>{
+
+  console.log(data)
+  // if((window.sessionStorage.getItem('clciked'))!= true){
+  //   return <Navigate to="/" replace />;
+  // }
 
   const navigate = useNavigate()
   const [show, setShow] = useState(true);
-  const [full, setFull] = useState(false)
+  const [from, setFrom] = useState('');
+  const [to, setTo] = useState('');
+  const [ftp, setFtp] = useState('');
+  const [notes, setNotes] = useState('')
+  
+const inputs= {from, to, ftp, notes}
+// console.log(inputs);
 
   const handleClose = (e) => {
     setShow(false)
     navigate('/')
   };
-  const handleShow = () => setShow(true);
-  const handleScreen = () => setFull(false)
-  const fullscreen = () => setFull(true)
+  const handleSubmit = (e) => {
 
+    let valid = new Date(from)
+    let expire = new Date(to)
+
+    if((from == '')||(to=='')){      
+      alert('please enter all the required inputs')
+      e.preventDefault()
+    }
+    else if(valid >= expire){
+      alert('Expire date can\'t be smaller than Valid Date')
+      e.preventDefault()
+    }
+    else if(expire > valid){
+      window.sessionStorage.setItem('rate lock',JSON.stringify(inputs))
+      setShow(false)
+      navigate('/')
+    }
+  }
+  
   const ModalTitle=()=>{
     return(
       <>
@@ -37,7 +64,7 @@ const RateLock=() =>{
       <>
         <div style={{display:'flex', justifyContent:'space-between'}}>
           <h3 className='pt-2'>Rate Lock</h3>
-          <button style={{alignItems:'center', background:'inherit', border:'none' }} onClick={()=>navigate('/ratelock-fullscreen')}><AiOutlineFullscreen/> FULLSCREEN</button>
+          <button data-testid='fs-redirect' style={{alignItems:'center', background:'inherit', border:'none' }} onClick={()=>navigate('/ratelock-fullscreen')}><AiOutlineFullscreen/> FULLSCREEN</button>
         </div>
       </>
     )
@@ -67,20 +94,35 @@ const RateLock=() =>{
               <form id='rateLock' style={{marginLeft:'0px'}}>
                 <Row className='mt-3'>
                     <Row>
-                      <Col lg={4}><label htmlFor='valid' required>Valid From *</label></Col>
-                      <Col lg={4}><label htmlFor='expire' required>Expires On *</label></Col>
+                      <Col lg={4}><label htmlFor='valid'>Valid From *</label></Col>
+                      <Col lg={4}><label htmlFor='expire'>Expires On *</label></Col>
                       <Col lg={4}><label htmlFor='ftp'>FTP</label></Col>
                     </Row>
                     <Row className='modalInput'>
-                      <Col lg={4}><input type='date' id='valid'/></Col>
-                      <Col lg={4}><input type='date' id='expire'/></Col>
-                      <Col lg={4}><input type='text' id='ftp'/></Col>
+                      <Col lg={4}><input type='date' name='valid-from' id='valid' required onChange={(e)=>{setFrom(e.target.value)}}/></Col>
+                      <Col lg={4}><input type='date' name='expires-on' id='expire' required onChange={(e)=>{setTo(e.target.value)}}/></Col>
+                      <Col lg={4}><input type='text' name='ftp' id='ftp' onChange={(e)=>{setFtp(e.target.value)}}/></Col>
+                    </Row>
+                    <Row className='error'>
+                      <Col lg={4}><span htmlFor='valid'>*required</span></Col>
+                      <Col lg={4}><span htmlFor='valid'>*required</span></Col>
+                      <Col lg={4}><span htmlFor='valid'>*required</span></Col>
                     </Row>
                     <Row className='mt-2'>
                       <label htmlFor='notes'>Notes</label>
                     </Row>
-                    <Row style={{paddingLeft:'20px'}}>
-                      <input type='text' id='notes' />
+                    <Row style={{paddingLeft:'25px', paddingRight:'25px'}}>
+                      <input type='text' name='notes' id='notes' onChange={(e)=>{setNotes(e.target.value)}}/>
+                    </Row>
+                    <Row>
+                      <div style={{display:'flex', justifyContent:'end', padding:'3em 0 0 0'}}>
+                        <button style={{marginRight:'30px', padding:'8px', borderRadius:'5px', border:'none', background:'inherit'}} type='submit' data-testid='cancel' onClick={handleClose}>
+                          CANCEL
+                        </button>
+                        <button form='ratelock' style={{padding:'8px', borderRadius:'5px', border:'none', backgroundColor:'blue', color:'white'}} type='submit'  onClick={(e)=>{handleSubmit(e)}} data-testid='save'>
+                          SAVE CHANGES
+                        </button> 
+                      </div>
                     </Row>
                 </Row>
               </form>
@@ -89,10 +131,11 @@ const RateLock=() =>{
   }
 
   return (
+    
     <>
       <Header/>
       <div style={{margin:'5px 45px'}}>
-      <Modal show={show} onHide={handleClose} size='xl' centered >
+      <Modal show={show} onHide={handleClose} size='xl' backdrop='static' animation={false} centered>
           <Container>
             <Modal.Header closeButton style={{borderBottom:0, padding:'10px 0 0 0'}}>
             <Modal.Title id="contained-modal-title-vcenter" >
@@ -103,14 +146,6 @@ const RateLock=() =>{
             <Modal.Body>
               {ModalBody()}
             </Modal.Body>
-            <Modal.Footer style={{borderTop:0}}>
-              <Button variant="secondary" onClick={handleClose}>
-                CANCEL
-              </Button>
-              <Button type='submit' form='rateLock'  onClick={handleClose}>
-                SAVE CHANGES
-              </Button>
-            </Modal.Footer>
           </Container>
       </Modal>
       </div>

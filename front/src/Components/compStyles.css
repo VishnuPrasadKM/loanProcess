@@ -121,3 +121,15 @@
   padding-left: 25px;
   padding-right: 0;
 }
+
+/* Form Error message */
+.error span{
+  font-size: 12px;
+  padding: 2px 5vh 0px;
+  display: none;
+  color: red;
+}
+
+input:invalid ~ span{
+  display: block;
+}
