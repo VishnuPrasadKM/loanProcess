@@ -14,7 +14,6 @@ function App() {
           </Route>
             <Route path='/waivers' element={<Waivers/>} />
             <Route path='/ratelock' element={<RateLock/>}/>
-            <Route path='/ratelock' element={<RateLock/>}/>
             <Route path='/ratelock-fullscreen' element={<RateLockFull/>}/>
           <Route path="*" element={<p>There's nothing here: 404!</p>} />
         </Routes>

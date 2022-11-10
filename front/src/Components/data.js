@@ -20,9 +20,7 @@ const ModalComponent = (prams) =>{
         console.log(prams.data);
         let data = prams.data;
         console.log(typeof(data));
-        alert('data passing');
         <RateLock {...data} />;
-        alert('data passed');
         // console.log(prams)
         // console.log(prams.data._id)
         // setClick(true)
