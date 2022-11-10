@@ -2,17 +2,32 @@ POST http://localhost:5000/api/data
 Content-Type: application/json
 
 {
-        "loanNum":897654329,
-        "name":"Antony",
-        "address":"kjadghds saigu",
-        "city":"easrrr",
-        "state":"SK",
-        "amount":347890,
+        "loanNum":"450752317",
+        "name":"Mahesh",
+        "address":"sialgasei siysd",
+        "city":"sjtj",
+        "state":"TF",
+        "amount":234560,
         "type":"Purchase",
-        "product":"zskfg usidg",
+        "product":"drty oiug",
         "status":"Pending",
-        "days": 21
+        "days": 18
 }
 
 ###
-GET http://localhost:5000/api/data
+GET http://localhost:5000/api/data/
+
+###
+GET http://localhost:5000/api/data/63486051fa4257d47239dbe0
+###
+GET http://localhost:5000/api/data/ratelock/
+
+###
+POST http://localhost:5000/api/data/ratelock
+Content-Type: application/json
+
+{
+        "loanId":"63486051fa4257d47239dbde",
+        "valid":"2018-02-21",
+        "expire":"2024-11-12"
+}

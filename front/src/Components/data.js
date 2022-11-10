@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useMemo, useCallback} from 'react';
 import { AgGridReact } from 'ag-grid-react'; // the AG Grid React Component
 import RateLock from './rateLock';
-// import CheckboxDropdown from './CheckboxDropdown';
+import CheckboxDropdown from './CheckboxDropdown';
 import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
 import 'ag-grid-community/styles/ag-theme-alpine.css'; // Optional theme CSS
 import { useNavigate } from 'react-router-dom';
 import { FiRefreshCcw } from 'react-icons/fi';
 import {BiHide} from 'react-icons/bi'
+import {BsSearch} from 'react-icons/bs'
 
 const ModalComponent = (prams) =>{
 
@@ -35,6 +36,7 @@ const ModalComponent = (prams) =>{
 const Data = () => {
 // console.log('hello')
 //  let colHide = sessionStorage.getItem('colHide')
+
 
  const [gridApi, setGridApi] = useState(null)
  const [gridColumnApi, setGridColumnApi] = useState(null)
@@ -66,9 +68,10 @@ const Data = () => {
     setGridColumnApi(prams.columnApi);
   };
 
-  const showColumn=()=>{
+  const showColumn=(e)=>{
     let colHide = JSON.parse(sessionStorage.getItem('colHide'))
     // console.log(JSON.stringify(colHide))
+    e.preventDefault()
       if((JSON.stringify(colHide)) === '[]'){
         alert('Please Select any Option')
       }
@@ -85,14 +88,6 @@ const Data = () => {
      resizable: true
    }));
 
- // Example of consuming Grid Event
-//  const cellClickedListener = useCallback( event => {
-//   //  console.log('cellClicked', event);
-//   //  console.log(event.data.amount)
-//   //  console.log(event.data._id)
-//   //  window.sessionStorage.setItem(event.data._id)
-//  }, []);
-
  // Example load data from sever
  useEffect(() => {
   // console.log('refreshed');
@@ -104,15 +99,43 @@ const Data = () => {
       fetch('http://localhost:5000/api/data')
       .then(result => result.json())
       .then((rowData) => setRowData(rowData))
+      // rowData.preventDefault() 
     }
 
+
+    const [search, setSearch] = useState('')
+
+    function Click(e) {
+      e.preventDefault();
+      console.log(search);
+      gridApi.setQuickFilter(search)
+      // further processing happens here
+   }
+
+
  return (
-   <div>
+  <>
+  <form >
+
+    <div className="field">
+      <input type="search" name="serch" id="search" 
+        placeholder="Loan # | Pool Name | Pool ID | Client Name | Property Address" onChange={(e)=>{setSearch(e.target.value)}}/>
+      <label htmlFor="search">Search</label>
+    </div>
+
+    <button data-tesid='search-button' type='submit' className='greyButton' style={{width:'8%', height:'35px', marginLeft:'25px'}} onClick={(e)=>Click(e)}><BsSearch/> Search</button>
+    <div style={{marginLeft:'30%'}}>
+      <div style={{display:'flex', alignItems:'center'}}>
+        <CheckboxDropdown data-tesid='dropdown-check'/>
+      </div>
+    </div>
+        <div>
           <div style={{display:'flex', alignItems:'baseline' , justifyContent:'flex-end'}}>
-            {/* <CheckboxDropdown/> */}
-            <button style={{background:'inherit', border:'none'}} onClick={() => setRefresh(!refresh)}><FiRefreshCcw style={{marginRight:'8px'}}/></button>
-            <button onClick={showColumn} style={{background:'inherit', border:'none'}}><BiHide/></button>
+            {/* <button style={{background:'inherit', border:'none'}} onClick={() => setRefresh(!refresh)}><FiRefreshCcw style={{marginRight:'8px'}}/></button> */}
+            <button onClick={(e)=>showColumn(e)} style={{background:'inherit', border:'none'}}><BiHide/></button>
+          </div>
         </div>
+  </form>
 
      <div className="ag-theme-alpine" style={{height: 400}}>
 
@@ -132,7 +155,7 @@ const Data = () => {
            onGridReady={onGridReady}
            />
      </div>
-   </div>
+   </>
  );
 };
 window.onunload = function(){

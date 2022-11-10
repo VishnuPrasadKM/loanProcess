@@ -12,8 +12,6 @@
 /* search box */
 
   form {
-    /*  */
-    margin-left: 40px;
     display: flex;
     align-items: center;
 
