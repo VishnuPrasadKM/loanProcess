@@ -4,9 +4,14 @@ const Data = require('../model/rateLockModel')
 
 // Loan Data
   // Fetching all data
-    router.get('/', async(req, res) =>{
-        const data = await Data.find()
-        res.status(200).json(data)
+
+    router.get("/", async (req, res) => {
+      try {
+        const data = await Data.find();
+        res.send(data);
+      } catch (error) {
+        return res.status(400).json(error);
+      }
     });
 
   // Fetching a single data
