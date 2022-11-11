@@ -7,7 +7,7 @@ import { Col, Container, Form, Row } from 'react-bootstrap';
 import {AiOutlineFullscreen} from 'react-icons/ai'
 import { useNavigate, useParams } from 'react-router-dom';
 
-const RateLock=(prams) =>{
+const RateLock=() =>{
 
   const { loanId } = useParams()
   const navigate = useNavigate()

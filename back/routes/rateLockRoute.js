@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Data = require('../model/rateLockModel')
 
-// Loan Data
+// Rate Lock Data
   // Fetching all data
 
     router.get("/", async (req, res) => {

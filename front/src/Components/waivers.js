@@ -34,7 +34,6 @@ const Waivers=(prams) =>{
             </Modal.Header>
             <div style={{display:'flex', justifyContent:'space-between'}}>
               <h3 className='pt-2'>Waivers</h3>
-              {/* <button style={{alignItems:'center', background:'inherit', border:'none' }} onClick={{fullscreen}}><AiOutlineFullscreen/> FULLSCREEN</button> */}
             </div>
             <Modal.Body>
               <Container>

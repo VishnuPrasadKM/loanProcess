@@ -5,21 +5,18 @@ import CheckboxDropdown from './CheckboxDropdown';
 import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
 import 'ag-grid-community/styles/ag-theme-alpine.css'; // Optional theme CSS
 import { useNavigate } from 'react-router-dom';
-import { FiRefreshCcw } from 'react-icons/fi';
 import {BiHide} from 'react-icons/bi'
 import {BsSearch} from 'react-icons/bs'
 
 const ModalComponent = (prams) =>{
 
   const navigate = useNavigate();
-  // const [click, setClick] = useState(false)
     return(
     <>
     <a onClick={()=>
       {
         <RateLock data={prams.data} />;
         let id = prams.data._id
-        window.sessionStorage.setItem('clicked', true)
         navigate(`/ratelock/${id}`)
       }}>
         {prams.value}</a>
@@ -33,7 +30,6 @@ const Data = () => {
  const [gridColumnApi, setGridColumnApi] = useState(null)
  const [hideColumn, setHideColumn] = useState(false)
  const [rowData, setRowData] = useState(); // Set rowData to Array of Objects, one Object per Row
- const [refresh, setRefresh] = useState(false)
 
  // Each Column Definition results in one Column.
  const [columnDefs, setColumnDefs] = useState([
@@ -87,18 +83,14 @@ const Data = () => {
       fetch('http://localhost:5000/api/data/loandata')
       .then(result => result.json())
       .then((rowData) => setRowData(rowData))
-      // rowData.preventDefault() 
     }
-
 
     const [search, setSearch] = useState('')
 
     function Click(e) {
       e.preventDefault();
       gridApi.setQuickFilter(search)
-      // further processing happens here
    }
-
 
  return (
   <>
@@ -126,13 +118,11 @@ const Data = () => {
      <div className="ag-theme-alpine" style={{height: 400}}>
 
        <AgGridReact
-          //  ref={gridRef}
            rowData={rowData} // Row Data for Rows
            columnDefs={columnDefs} // Column Defs for Columns
            defaultColDef={defaultColDef} // Default Column Properties
             rowSelection='single' // Options - allows click selection of rows
 
-        //    rowGroupPanelShow={'always'}
            pivotPanelShow={'always'}
            pagination={true}
            paginationPageSize={7}
