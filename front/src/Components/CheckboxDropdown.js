@@ -39,22 +39,14 @@ const HandleChange = (event) => {
     target: { value },
   } = event;
   const val={value};
-    // <Data {...value}/>;
     setArr(arr=>[val])
     setcolumnName(
       typeof value === 'string' ? value.split(',') : value,
       );
-        // handelSubmit(arr)
 }
 
-// console.log(arr);
-
 const handelSubmit = (arr) => {
-//   console.log(arr[0].value);
   sessionStorage.setItem("colHide", JSON.stringify(arr[0].value));
-//   <Data data={'pass'}/>
-  // Data('data')
-//   console.log("occured")
 }
 
 return (

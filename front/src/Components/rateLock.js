@@ -2,34 +2,26 @@ import {AiOutlineHome} from 'react-icons/ai'
 import {IoIosArrowForward} from 'react-icons/io'
 import Header from './Reusable/header'
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { Col, Container, Form, Row } from 'react-bootstrap';
 import {AiOutlineFullscreen} from 'react-icons/ai'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const RateLock=(data) =>{
+const RateLock=() =>{
 
-  console.log(data)
-  // if((window.sessionStorage.getItem('clciked'))!= true){
-  //   return <Navigate to="/" replace />;
-  // }
-
+  const { loanId } = useParams()
   const navigate = useNavigate()
   const [show, setShow] = useState(true);
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
   const [ftp, setFtp] = useState('');
   const [notes, setNotes] = useState('')
-  
-const inputs= {from, to, ftp, notes}
-// console.log(inputs);
 
   const handleClose = (e) => {
     setShow(false)
     navigate('/')
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
 
     let valid = new Date(from)
     let expire = new Date(to)
@@ -43,11 +35,24 @@ const inputs= {from, to, ftp, notes}
       e.preventDefault()
     }
     else if(expire > valid){
-      window.sessionStorage.setItem('rate lock',JSON.stringify(inputs))
-      setShow(false)
-      navigate('/')
+      let rateLockData = await fetch('http://localhost:5000/api/data/ratelock' ,{
+        method:'POST',
+        body: JSON.stringify({
+          loanId:loanId, 
+          valid:from, 
+          expire:to, 
+          ftp:ftp, 
+          notes:notes
+        }),
+        headers:{
+          'Content-Type': 'application/json'
+        }
+        });
+        rateLockData = await rateLockData.json()
+        setShow(false)
+        navigate('/')
+      }
     }
-  }
   
   const ModalTitle=()=>{
     return(
@@ -131,7 +136,6 @@ const inputs= {from, to, ftp, notes}
   }
 
   return (
-    
     <>
       <Header/>
       <div style={{margin:'5px 45px'}}>
