@@ -17,16 +17,10 @@ const ModalComponent = (prams) =>{
     <>
     <a onClick={()=>
       {
-        // let amt = prams.data.amount;
-        console.log(prams.data);
-        let data = prams.data;
-        console.log(typeof(data));
-        <RateLock {...data} />;
-        // console.log(prams)
-        // console.log(prams.data._id)
-        // setClick(true)
+        <RateLock data={prams.data} />;
+        let id = prams.data._id
         window.sessionStorage.setItem('clicked', true)
-        navigate(`/ratelock/?${prams.data._id}`)
+        navigate(`/ratelock/${id}`)
       }}>
         {prams.value}</a>
     </>)

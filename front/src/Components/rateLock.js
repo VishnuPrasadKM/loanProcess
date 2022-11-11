@@ -2,19 +2,14 @@ import {AiOutlineHome} from 'react-icons/ai'
 import {IoIosArrowForward} from 'react-icons/io'
 import Header from './Reusable/header'
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { Col, Container, Form, Row } from 'react-bootstrap';
 import {AiOutlineFullscreen} from 'react-icons/ai'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const RateLock=(data) =>{
+const RateLock=() =>{
 
-  console.log(data)
-  // if((window.sessionStorage.getItem('clciked'))!= true){
-  //   return <Navigate to="/" replace />;
-  // }
-
+  const { loanId } = useParams()
   const navigate = useNavigate()
   const [show, setShow] = useState(true);
   const [from, setFrom] = useState('');
@@ -22,7 +17,7 @@ const RateLock=(data) =>{
   const [ftp, setFtp] = useState('');
   const [notes, setNotes] = useState('')
   
-const inputs= {from, to, ftp, notes}
+const inputs= {loanId, from, to, ftp, notes}
 // console.log(inputs);
 
   const handleClose = (e) => {
