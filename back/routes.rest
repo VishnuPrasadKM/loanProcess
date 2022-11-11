@@ -14,20 +14,20 @@ Content-Type: application/json
         "days": 18
 }
 
-###
-GET http://localhost:5000/api/data/
 
 ###
 GET http://localhost:5000/api/data/63486051fa4257d47239dbe0
 ###
-GET http://localhost:5000/api/data/ratelock/
+GET http://localhost:5000/api/data/loandata
+###
+GET http://localhost:5000/api/data/ratelock
 
 ###
-POST http://localhost:5000/api/data/ratelock
+POST http://localhost:5000/api/ratelock
 Content-Type: application/json
 
 {
         "loanId":"63486051fa4257d47239dbde",
-        "valid":"2018-02-21",
-        "expire":"2024-11-12"
+        "valid":"1990-10-20",
+        "expire":"2014-10-20"
 }

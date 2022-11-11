@@ -19,5 +19,11 @@ mongoose
       .catch((error) => console.error("Mongodb connection failed", error));
 
 
-app.use('/api/data', require('./routes/loanRoute'))
+app.use('/api/data/loandata', require('./routes/loanRoute'))
 app.use('/api/data/ratelock', require('./routes/rateLockRoute'))
+app.get("*", (req, res) =>{
+  res.status(404)
+  res.send(`Available routes on this port ${PORT}
+        1. http://localhost:5000/api/data/ratelock   
+        2. http://localhost:5000/api/data/loandata`)
+});
