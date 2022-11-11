@@ -28,9 +28,6 @@ const ModalComponent = (prams) =>{
 
 
 const Data = () => {
-// console.log('hello')
-//  let colHide = sessionStorage.getItem('colHide')
-
 
  const [gridApi, setGridApi] = useState(null)
  const [gridColumnApi, setGridColumnApi] = useState(null)
@@ -64,7 +61,6 @@ const Data = () => {
 
   const showColumn=(e)=>{
     let colHide = JSON.parse(sessionStorage.getItem('colHide'))
-    // console.log(JSON.stringify(colHide))
     e.preventDefault()
       if((JSON.stringify(colHide)) === '[]'){
         alert('Please Select any Option')
@@ -84,13 +80,11 @@ const Data = () => {
 
  // Example load data from sever
  useEffect(() => {
-  // console.log('refreshed');
   fetchData()
-  //  sessionStorage.removeItem('colHide')
  }, [refresh]);
 
     const fetchData=()=>{
-      fetch('http://localhost:5000/api/data')
+      fetch('http://localhost:5000/api/data/loandata')
       .then(result => result.json())
       .then((rowData) => setRowData(rowData))
       // rowData.preventDefault() 
@@ -101,7 +95,6 @@ const Data = () => {
 
     function Click(e) {
       e.preventDefault();
-      console.log(search);
       gridApi.setQuickFilter(search)
       // further processing happens here
    }
@@ -125,7 +118,6 @@ const Data = () => {
     </div>
         <div>
           <div style={{display:'flex', alignItems:'baseline' , justifyContent:'flex-end'}}>
-            {/* <button style={{background:'inherit', border:'none'}} onClick={() => setRefresh(!refresh)}><FiRefreshCcw style={{marginRight:'8px'}}/></button> */}
             <button onClick={(e)=>showColumn(e)} style={{background:'inherit', border:'none'}}><BiHide/></button>
           </div>
         </div>
@@ -139,7 +131,6 @@ const Data = () => {
            columnDefs={columnDefs} // Column Defs for Columns
            defaultColDef={defaultColDef} // Default Column Properties
             rowSelection='single' // Options - allows click selection of rows
-          //  onCellClicked={cellClickedListener} // Optional - registering for Grid Event
 
         //    rowGroupPanelShow={'always'}
            pivotPanelShow={'always'}

@@ -16,15 +16,12 @@ const RateLock=() =>{
   const [to, setTo] = useState('');
   const [ftp, setFtp] = useState('');
   const [notes, setNotes] = useState('')
-  
-const inputs= {loanId, from, to, ftp, notes}
-// console.log(inputs);
 
   const handleClose = (e) => {
     setShow(false)
     navigate('/')
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
 
     let valid = new Date(from)
     let expire = new Date(to)
@@ -38,11 +35,24 @@ const inputs= {loanId, from, to, ftp, notes}
       e.preventDefault()
     }
     else if(expire > valid){
-      window.sessionStorage.setItem('rate lock',JSON.stringify(inputs))
-      setShow(false)
-      navigate('/')
+      let rateLockData = await fetch('http://localhost:5000/api/data/ratelock' ,{
+        method:'POST',
+        body: JSON.stringify({
+          loanId:loanId, 
+          valid:from, 
+          expire:to, 
+          ftp:ftp, 
+          notes:notes
+        }),
+        headers:{
+          'Content-Type': 'application/json'
+        }
+        });
+        rateLockData = await rateLockData.json()
+        setShow(false)
+        navigate('/')
+      }
     }
-  }
   
   const ModalTitle=()=>{
     return(
