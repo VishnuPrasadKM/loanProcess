@@ -136,7 +136,6 @@ const RateLock=() =>{
   }
 
   return (
-    
     <>
       <Header/>
       <div style={{margin:'5px 45px'}}>
