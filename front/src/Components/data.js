@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback} from 'react';
+import React, { useState, useEffect, useMemo} from 'react';
 import { AgGridReact } from 'ag-grid-react'; // the AG Grid React Component
 import RateLock from './rateLock';
 import CheckboxDropdown from './CheckboxDropdown';
@@ -77,7 +77,7 @@ const Data = () => {
  // Example load data from sever
  useEffect(() => {
   fetchData()
- }, [refresh]);
+ }, []);
 
     const fetchData=()=>{
       fetch('http://localhost:5000/api/data/loandata')
