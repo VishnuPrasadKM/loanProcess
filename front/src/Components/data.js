@@ -23,6 +23,20 @@ const ModalComponent = (prams) =>{
     </>)
 }
 
+const WaiverModalComponent = (prams) =>{
+
+  const navigate = useNavigate();
+    return(
+    <>
+    <a onClick={()=>
+      {
+        let id = prams.data._id;
+        window.sessionStorage.setItem('amount', prams.data.amount)
+        navigate(`/waivers/${id}`)
+      }}>
+        {prams.value}</a>
+    </>)
+}
 
 const Data = () => {
 
@@ -43,7 +57,7 @@ const Data = () => {
     {headerName:"Property Address",field: "address", flex:1.3},
     {headerName:"City",field: "city", flex:0.7},
     {headerName:"State",field: "state", flex:0.6},
-    {headerName:"Loan Amount",field: "amount", flex:1},
+    {headerName:"Loan Amount",field: "amount", flex:1, cellRenderer: WaiverModalComponent,},
     {headerName:"Loan Type",field: "type"},
     {headerName:"Product",field: "product"},
     {headerName:"Status",field: "status"},

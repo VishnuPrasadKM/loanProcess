@@ -69,7 +69,7 @@ const RateLock=() =>{
       <>
         <div style={{display:'flex', justifyContent:'space-between'}}>
           <h3 className='pt-2'>Rate Lock</h3>
-          <button data-testid='fs-redirect' style={{alignItems:'center', background:'inherit', border:'none' }} onClick={()=>navigate('/ratelock-fullscreen')}><AiOutlineFullscreen/> FULLSCREEN</button>
+          <button data-testid='fs-redirect' style={{alignItems:'center', background:'inherit', border:'none' }} onClick={()=>navigate(`/ratelock-fullscreen/${loanId}`)}><AiOutlineFullscreen/> FULLSCREEN</button>
         </div>
       </>
     )

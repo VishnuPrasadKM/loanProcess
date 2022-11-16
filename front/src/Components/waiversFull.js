@@ -8,7 +8,7 @@ import {RiDeleteBin5Line} from 'react-icons/ri'
 import { useNavigate, useParams } from 'react-router-dom';
 import {AiOutlineFullscreen} from 'react-icons/ai'
 
-const Waiver=() =>{
+const WaiversFull=() =>{
 
   const { loanId } = useParams()
   const navigate = useNavigate()
@@ -56,7 +56,7 @@ const Waiver=() =>{
       <div>
         <Header/>
       <div style={{margin:'5px 45px'}}>
-      <Modal show={show} onHide={handleClose} size='xl' centered >
+      <Modal show={show} onHide={handleClose} size='xl' centered fullscreen>
           <Container>
             <Modal.Header closeButton style={{borderBottom:0, padding:'10px 0 0 0'}}>
             <Modal.Title id="contained-modal-title-vcenter" >
@@ -67,7 +67,7 @@ const Waiver=() =>{
             </Modal.Header>
             <div style={{display:'flex', justifyContent:'space-between'}}>
               <h3 className='pt-2'>Waivers</h3>
-              <button data-testid='fs-redirect' style={{alignItems:'center', background:'inherit', border:'none' }} onClick={()=>navigate(`/waivers-fullscreen/${loanId}`)}><AiOutlineFullscreen/> FULLSCREEN</button>
+              <button data-testid='fs-redirect' style={{alignItems:'center', background:'inherit', border:'none' }} onClick={()=>navigate(`/waivers/${loanId}`)}><AiOutlineFullscreen/> MINIMIZE</button>
             </div>
             <Modal.Body>
               <Container>
@@ -129,4 +129,4 @@ const Waiver=() =>{
     )
 }
 
-export default Waiver
+export default WaiversFull
