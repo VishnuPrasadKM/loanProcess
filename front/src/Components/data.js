@@ -72,7 +72,7 @@ const Data = () => {
   const showColumn=(e)=>{
     let colHide = JSON.parse(sessionStorage.getItem('colHide'))
     e.preventDefault()
-      if((JSON.stringify(colHide)) === '[]'){
+      if(((JSON.stringify(colHide)) === '[]')||(colHide===null)){
         alert('Please Select any Option')
       }
       else{
