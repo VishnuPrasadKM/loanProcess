@@ -52,8 +52,24 @@ const RateLock=() =>{
         setShow(false)
         navigate('/')
       }
-    }
+  }
   
+  const fullscreen = () => {
+    let myDocument = document.documentElement;
+    let toggleScreen = document.getElementById('toggle');
+    let modalToggle = document.getElementById('modalFull');
+      if(toggleScreen.innerText == "Fullscreen"){
+        myDocument.requestFullscreen();
+        modalToggle.classList.add('modal-fullscreen');
+        modalToggle.classList.add('modal-fullscreen')
+        toggleScreen.innerHTML = 'Exit Fullscreen';
+      } else{
+        document.exitFullscreen();
+        modalToggle.classList.remove('modal-fullscreen')
+        toggleScreen.innerHTML = 'Fullscreen'
+      }
+    }
+
   const ModalTitle=()=>{
     return(
       <>
@@ -69,7 +85,7 @@ const RateLock=() =>{
       <>
         <div style={{display:'flex', justifyContent:'space-between'}}>
           <h3 className='pt-2'>Rate Lock</h3>
-          <button data-testid='fs-redirect' style={{alignItems:'center', background:'inherit', border:'none' }} onClick={()=>navigate(`/ratelock-fullscreen/${loanId}`)}><AiOutlineFullscreen/> FULLSCREEN</button>
+          <button data-testid='fs-redirect' id='toggle' style={{fontStyle:'italic', background:'inherit', border:'none'}} onClick={()=>fullscreen()}>Fullscreen</button>
         </div>
       </>
     )
@@ -139,7 +155,7 @@ const RateLock=() =>{
     <>
       <Header/>
       <div style={{margin:'5px 45px'}}>
-      <Modal show={show} onHide={handleClose} size='xl' backdrop='static' animation={false} centered>
+      <Modal id='modalFull' show={show} onHide={handleClose} size='xl' backdrop='static' animation={false} centered>
           <Container>
             <Modal.Header closeButton style={{borderBottom:0, padding:'10px 0 0 0'}}>
             <Modal.Title id="contained-modal-title-vcenter" >
