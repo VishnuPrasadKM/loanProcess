@@ -32,7 +32,6 @@ const Waiver=() =>{
     
     let addFormFields = () => {
         setFormValues([...formValues, { to: "", amount: 0, by: "", date: "" }]);
-        counter = counter+1;
 
     }
     
@@ -40,13 +39,12 @@ const Waiver=() =>{
         let newFormValues = [...formValues];
         newFormValues.splice(i, 1);
         setFormValues(newFormValues);
-        counter = counter-1;
     };
     const fullscreen = () => {
     let myDocument = document.documentElement;
     let toggleScreen = document.getElementById('toggle');
     let modalToggle = document.getElementById('modalFull');
-      if(toggleScreen.innerText ==+ "Fullscreen"){
+      if(toggleScreen.innerText === "Fullscreen"){
         myDocument.requestFullscreen();
         modalToggle.classList.add('modal-fullscreen');
         modalToggle.classList.add('modal-fullscreen')
@@ -208,7 +206,6 @@ const Waiver=() =>{
                   index+1 ? 
                     <button style={{border:'none', background:'inherit', paddingLeft:'15px'}} type="button"  className="button remove" onClick={() => {
                       removeFormFields(index);
-                      console.log(index);
                     }}><RiDeleteBin5Line/> Remove</button> 
                   : null
                 }</Col>
