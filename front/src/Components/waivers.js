@@ -15,8 +15,12 @@ const Waiver=() =>{
   const [approve, setApprove] = useState('');
   const [reason, setReason] = useState('');
   const [show, setShow] = useState(true);
-  const [formValues, setFormValues] = useState([{ to: "", amount : 0, by: "", date: ""}])
-  let counter = 0;
+  const [formValues, setFormValues] = useState([{ to: "", amount : 0, by: "", date: ""}]);
+  const [counter, setCounter] = useState(1);
+
+  const app = document.getElementById('app');
+  const apr = document.getElementById('apr');
+  const res = document.getElementById('res');
 
   const handleClose = (e) => {
     setShow(false)
@@ -32,13 +36,16 @@ const Waiver=() =>{
     
     let addFormFields = () => {
         setFormValues([...formValues, { to: "", amount: 0, by: "", date: "" }]);
-
+        setCounter(counter+1);
+        console.log(counter);
     }
     
     let removeFormFields = (i) => {
         let newFormValues = [...formValues];
         newFormValues.splice(i, 1);
         setFormValues(newFormValues);
+        setCounter(counter-1);
+        console.log(counter);
     };
     const fullscreen = () => {
     let myDocument = document.documentElement;
@@ -57,8 +64,30 @@ const Waiver=() =>{
     }
 
     const itemsError = () => {
-      
+      console.log('errorchk');
+      if((approve === '') || (reason ==='')){  
+          alert('Please Enter required inputs');      
+      } else{
+      let err = 0;
+      for(let i=0;i<counter;i++){
+        if (formValues[i].to === ""){
+          err +=1;
+        }
+      }if(err>0){
+        app.textContent = '* Required';
+        app.style.color = 'red';
+        app.style.fontSize = '.9em';
+        // alert('Enter Applies to')
+      }else{
+        app.textContent = '*';
+        app.style.color = 'inherit';
+        app.style.fontSize = '1em';
+        waiver.items.push(formValues);
+        console.log(waiver);
+        postData();
+      }
     }
+  }
 
     const postData = async() => {
       console.log(waiver);
@@ -79,74 +108,11 @@ const Waiver=() =>{
     }
 
     const waiver ={loanId:loanId, approve, reason, items:[]};
+
     let handleSubmit = async(event) => {
       event.preventDefault();
-      const app = document.getElementById('app');
-      const apr = document.getElementById('apr');
-      const res = document.getElementById('res');
-      if((approve === '')&&(reason ==='')){  
-        // alert('Please Enter all required inputs');
-        apr.textContent = '* Required'
-        apr.style.color = 'red'
-        apr.style.fontSize = '1.5em'
-        res.textContent = '* Required'
-        res.style.color = 'red'
-        res.style.fontSize = '1.5em'
-        app.textContent = '* Required'
-        app.style.color = 'red'
-        app.style.fontSize = '1.5em'
-      } else if(approve == ""){
-        res.textContent = '*'
-        res.style.color = 'inherit'
-        res.style.fontSize = '1em'
-        apr.textContent = '* Required'
-        apr.style.color = 'red'
-        apr.style.fontSize = '1.5em'
-      } else if(reason == ""){
-        res.textContent = '* Required'
-        res.style.color = 'red'
-        res.style.fontSize = '1.5em'
-        apr.textContent = '*'
-        apr.style.color = 'inherit'
-        apr.style.fontSize = '1em'
-      } else{
-          waiver.approve = approve;
-          waiver.reason = reason;
-          // Looping to check itemization
-
-          formValues.forEach( value => {
-          if(value.to == "" || null || undefined){
-            // alert('Please enter applies to')
-            apr.textContent = '*'
-            apr.style.color = 'inherit'
-            apr.style.fontSize = '1em'
-            res.textContent = '*'
-            res.style.color = 'inherit'
-            res.style.fontSize = '1em'
-            app.textContent = '* Required'
-            app.style.color = 'red'
-            app.style.fontSize = '1.5em'
-            console.log('error 1');
-          }
-          else if(((value.amount) > Number(sessionStorage.getItem('amount')))){
-            console.log(parseInt(value.amount));
-            console.log(parseInt(sessionStorage.getItem('amount')));
-            console.log((parseInt(value.amount) > parseInt(sessionStorage.getItem('amount'))));
-            alert('Waiver amount cannot be more than Loan Amount')
-            console.log('error 2');
-          }
-          else{
-            waiver.items.push({appliesTo:value.to, amount:value.amount, modifiedBy:value.by, date:value.date});
-            console.log('no error');
-            console.log(waiver.items.length);
-          }
-        })
-        // loop ends
-        postData();
-        setShow(false);
-        navigate('/');
-      sessionStorage.removeItem('amount');
-    }
+      itemsError();
+      console.log('submit');
   }
 
     return (
@@ -171,12 +137,34 @@ const Waiver=() =>{
                 <Row style={{border:'15px solid #efefef'}}>
                         <h6 style={{backgroundColor:'#97bb61b3',padding:'8px 0 8px 8px'}}>Total Amount ${sessionStorage.getItem('amount')}</h6>
                       <Row>
-                        <Col lg={4}><label htmlFor='approve'>Approved By <span id='apr'>*</span></label></Col>
-                        <Col lg={8}><label htmlFor='reason'>Reason <span id='res'>*</span></label></Col>
+                        <Col lg={4}><label htmlFor='approve'>Approved By <span id='apr' style={{color:'red', fontSize:'.9em'}}>* Required</span></label></Col>
+                        <Col lg={8}><label htmlFor='reason'>Reason <span id='res' style={{color:'red', fontSize:'.9em'}}>* Required
+                        </span></label></Col>
                       </Row>
                       <Row className='modalInput'>
-                        <Col lg={4}><input type='text' id='approve' onChange={(e)=> setApprove(e.target.value)}/></Col>
-                        <Col lg={8}><input type='text' id='reason' onChange={(e)=> setReason(e.target.value)}/></Col>
+                        <Col lg={4}><input type='text' id='approve' onChange={(e)=> {
+                          setApprove(e.target.value);
+                          if(e.target.value === ""){
+                            apr.textContent = '* Required'
+                            apr.style.color = 'red'
+                            apr.style.fontSize = '.9em'
+                          } else{
+                            apr.textContent = '*'
+                            apr.style.color = 'inherit'
+                            apr.style.fontSize = '1em'
+                          }
+                          }}/></Col>
+                        <Col lg={8}><input type='text' id='reason' onChange={(e)=> {
+                          setReason(e.target.value)
+                          if(e.target.value === ""){
+                            res.textContent = '* Required'
+                            res.style.color = 'red'
+                            res.style.fontSize = '.9em'
+                          } else{
+                            res.textContent = '*'
+                            res.style.color = 'inherit'
+                            res.style.fontSize = '1em'
+                          }}}/></Col>
                       </Row>
                       <Row className='mt-2' style={{display:'flex', justifyContent:'space-between'}}>
                         <h5 style={{width:'50%'}}>Itemization</h5>
@@ -190,7 +178,7 @@ const Waiver=() =>{
         <form id='waiverForm' onSubmit={handleSubmit} style={{ display:'block', paddingBottom:'30px'}}>
           
               <Row style={{width:'100%'}}>
-                <Col style={{width:'23.75%'}}><label>Applies To <span id='app'>*</span></label></Col>
+                <Col style={{width:'23.75%'}}><label>Applies To <span id='app' style={{color:'red', fontSize:'.9em'}}>* Required</span></label></Col>
                 <Col style={{width:'23.75%'}}><label>Amount</label></Col>
                 <Col style={{width:'23.75%'}}><label>Modified by</label></Col>
                 <Col style={{width:'23.75%'}}><label>Date</label></Col>
@@ -198,17 +186,28 @@ const Waiver=() =>{
               </Row>
               {formValues.map((element, index) => (
               <Row style={{width:'100%'}} key={index} className='mt-2'>
-              <Col ><input style={{width:'100%'}} type="text" name="to" value={element.to || ""} onChange={e => handleChange(index, e)} /></Col>
-              <Col ><span style={{display:'flex', alignItems:'center'}}>$ <input style={{width:'100%'}} type="number" name="amount" value={element.amount || ""} onChange={e => handleChange(index, e)} /></span></Col>
-              <Col ><input style={{width:'100%'}} type="text" name="by" value={element.by || ""} onChange={e => handleChange(index, e)} /></Col>
-              <Col ><input style={{width:'100%'}} type="date" name="date" value={element.date || ""} onChange={e => handleChange(index, e)} /></Col>
-              <Col >{
-                  index+1 ? 
-                    <button style={{border:'none', background:'inherit', paddingLeft:'15px'}} type="button"  className="button remove" onClick={() => {
-                      removeFormFields(index);
-                    }}><RiDeleteBin5Line/> Remove</button> 
-                  : null
-                }</Col>
+                <Col ><input style={{width:'100%'}} type="text" name="to" value={element.to || ""} onChange={e => {
+                  handleChange(index, e);
+                  if(e.target.value === ""){
+                    app.textContent = '* Required'
+                    app.style.color = 'red'
+                    app.style.fontSize = '.9em'
+                  } else{
+                    app.textContent = '*'
+                    app.style.color = 'inherit'
+                    app.style.fontSize = '1em'
+                  }
+                  }} /></Col>
+                <Col ><span style={{display:'flex', alignItems:'center'}}>$ <input style={{width:'100%'}} type="number" name="amount" value={element.amount || ""} onChange={e => handleChange(index, e)} /></span></Col>
+                <Col ><input style={{width:'100%'}} type="text" name="by" value={element.by || ""} onChange={e => handleChange(index, e)} /></Col>
+                <Col ><input style={{width:'100%'}} type="date" name="date" value={element.date || ""} onChange={e => handleChange(index, e)} /></Col>
+                <Col >{
+                    index+1 ? 
+                      <button style={{border:'none', background:'inherit', paddingLeft:'15px'}} type="button"  className="button remove" onClick={() => {
+                        removeFormFields(index);
+                      }}><RiDeleteBin5Line/> Remove</button> 
+                    : null
+                  }</Col>
               </Row>
           ))}
         </form>
