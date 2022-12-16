@@ -4,7 +4,6 @@ import Header from './Reusable/header'
 import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Col, Container, Form, Row } from 'react-bootstrap';
-import {AiOutlineFullscreen} from 'react-icons/ai'
 import { useNavigate, useParams } from 'react-router-dom';
 
 const RateLock=() =>{
@@ -34,7 +33,7 @@ const RateLock=() =>{
     let valid = new Date(from)
     let expire = new Date(to)
 
-    if((from == '')||(to=='')){      
+    if((from === '')||(to ==='')){      
       alert('please enter all the required inputs')
       e.preventDefault()
     }
@@ -43,7 +42,7 @@ const RateLock=() =>{
       e.preventDefault()
     }
     else if(expire > valid){
-      let rateLockData = await fetch('http://localhost:5000/api/data/ratelock' ,{
+      await fetch('http://localhost:5000/api/data/ratelock' ,{
         method:'POST',
         body: JSON.stringify({
           loanId:loanId, 
@@ -56,7 +55,6 @@ const RateLock=() =>{
           'Content-Type': 'application/json'
         }
         });
-        rateLockData = await rateLockData.json()
         setShow(false)
         if((window.screenTop && window.screenY) !== 0){
           document.exitFullscreen();
@@ -71,7 +69,7 @@ const RateLock=() =>{
     let myDocument = document.documentElement;
     let toggleScreen = document.getElementById('toggle');
     let modalToggle = document.getElementById('modalFull');
-      if(toggleScreen.innerText == "Fullscreen"){
+      if(toggleScreen.innerText === "Fullscreen"){
         myDocument.requestFullscreen();
         modalToggle.classList.add('modal-fullscreen');
         modalToggle.classList.add('modal-fullscreen')

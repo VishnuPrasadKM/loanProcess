@@ -91,7 +91,7 @@ const Waiver=() =>{
   }
 
     const postData = async() => {
-      let waiverData = await fetch('http://localhost:5000/api/data/waiver' ,{
+      await fetch('http://localhost:5000/api/data/waiver' ,{
         method:'POST',
         body: JSON.stringify({
           loanId:waiver.loanId, 
@@ -103,7 +103,6 @@ const Waiver=() =>{
           'Content-Type': 'application/json'
         }
         });
-        waiverData = await waiverData.json();
         if((window.screenTop && window.screenY) !== 0){
           setShow(false);
           document.exitFullscreen();
@@ -204,7 +203,7 @@ const Waiver=() =>{
                     app.style.fontSize = '1em'
                   }
                   }} /></Col>
-                <Col ><span style={{display:'flex', alignItems:'center'}}>$ <input style={{width:'100%'}} type="number" name="amount" value={element.amount || ""} onChange={e => handleChange(index, e)} /></span></Col>
+                <Col ><span style={{display:'flex', alignItems:'center'}}><span style={{paddingRight:'5px', fontSize:'1.5em'}}>$</span><input style={{width:'100%'}} type="number" name="amount" value={element.amount || ""} onChange={e => handleChange(index, e)} /></span></Col>
                 <Col ><input style={{width:'100%'}} type="text" name="by" value={element.by || ""} onChange={e => handleChange(index, e)} /></Col>
                 <Col ><input style={{width:'100%'}} type="date" name="date" value={element.date || ""} onChange={e => handleChange(index, e)} /></Col>
                 <Col >{
