@@ -23,9 +23,14 @@ const Waiver=() =>{
   const res = document.getElementById('res');
 
   const handleClose = (e) => {
-    setShow(false)
-    navigate('/')
-    sessionStorage.removeItem('amount')
+    setShow(false);
+    sessionStorage.removeItem('amount');
+    if((window.screenTop && window.screenY) !== 0){
+      document.exitFullscreen();
+      navigate('/');
+    } else{
+      navigate('/');
+    }
   };
 
     let handleChange = (i, e) => {
@@ -37,7 +42,6 @@ const Waiver=() =>{
     let addFormFields = () => {
         setFormValues([...formValues, { to: "", amount: 0, by: "", date: "" }]);
         setCounter(counter+1);
-        console.log(counter);
     }
     
     let removeFormFields = (i) => {
@@ -45,7 +49,6 @@ const Waiver=() =>{
         newFormValues.splice(i, 1);
         setFormValues(newFormValues);
         setCounter(counter-1);
-        console.log(counter);
     };
     const fullscreen = () => {
     let myDocument = document.documentElement;
@@ -64,7 +67,6 @@ const Waiver=() =>{
     }
 
     const itemsError = () => {
-      console.log('errorchk');
       if((approve === '') || (reason ==='')){  
           alert('Please Enter required inputs');      
       } else{
@@ -83,14 +85,12 @@ const Waiver=() =>{
         app.style.color = 'inherit';
         app.style.fontSize = '1em';
         waiver.items.push(formValues);
-        console.log(waiver);
         postData();
       }
     }
   }
 
     const postData = async() => {
-      console.log(waiver);
       let waiverData = await fetch('http://localhost:5000/api/data/waiver' ,{
         method:'POST',
         body: JSON.stringify({
@@ -104,7 +104,14 @@ const Waiver=() =>{
         }
         });
         waiverData = await waiverData.json();
-        console.log(waiverData);
+        if((window.screenTop && window.screenY) !== 0){
+          setShow(false);
+          document.exitFullscreen();
+          navigate('/')
+        } else{
+          setShow(false);
+          navigate('/')
+        }
     }
 
     const waiver ={loanId:loanId, approve, reason, items:[]};
@@ -112,7 +119,6 @@ const Waiver=() =>{
     let handleSubmit = async(event) => {
       event.preventDefault();
       itemsError();
-      console.log('submit');
   }
 
     return (

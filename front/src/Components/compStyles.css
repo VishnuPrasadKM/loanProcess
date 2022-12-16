@@ -126,7 +126,3 @@
   display: none;
   color: red;
 }
-
-input:invalid ~ span{
-  display: block;
-}

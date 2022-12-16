@@ -17,9 +17,17 @@ const RateLock=() =>{
   const [ftp, setFtp] = useState('');
   const [notes, setNotes] = useState('')
 
+  const val = document.getElementById('val');
+  const exp = document.getElementById('exp');
+
   const handleClose = (e) => {
     setShow(false)
-    navigate('/')
+    if((window.screenTop && window.screenY) !== 0){
+      document.exitFullscreen();
+      navigate('/')
+    }else{
+      navigate('/')
+    }
   };
   const handleSubmit = async(e) => {
 
@@ -50,7 +58,12 @@ const RateLock=() =>{
         });
         rateLockData = await rateLockData.json()
         setShow(false)
-        navigate('/')
+        if((window.screenTop && window.screenY) !== 0){
+          document.exitFullscreen();
+          navigate('/')
+        }else{
+          navigate('/')
+        }
       }
   }
   
@@ -115,19 +128,36 @@ const RateLock=() =>{
               <form id='rateLock' style={{marginLeft:'0px'}}>
                 <Row className='mt-3'>
                     <Row>
-                      <Col lg={4}><label htmlFor='valid'>Valid From *</label></Col>
-                      <Col lg={4}><label htmlFor='expire'>Expires On *</label></Col>
+                      <Col lg={4}><label htmlFor='valid'>Valid From <span id='val' style={{color:'red', fontSize:'.9em'}}>* Required</span></label></Col>
+                      <Col lg={4}><label htmlFor='expire'>Expires On <span id='exp' style={{color:'red', fontSize:'.9em'}}>* Required</span></label></Col>
                       <Col lg={4}><label htmlFor='ftp'>FTP</label></Col>
                     </Row>
                     <Row className='modalInput'>
-                      <Col lg={4}><input type='date' name='valid-from' id='valid' required onChange={(e)=>{setFrom(e.target.value)}}/></Col>
-                      <Col lg={4}><input type='date' name='expires-on' id='expire' required onChange={(e)=>{setTo(e.target.value)}}/></Col>
+                      <Col lg={4}><input type='date' name='valid-from' id='valid' required onChange={(e)=>{
+                        setFrom(e.target.value)
+                        if(e.target.value === ""){
+                          val.textContent = '* Required';
+                          val.style.color = 'red';
+                          val.style.fontSize = '.9em';
+                        } else{
+                          val.textContent = '*';
+                          val.style.color = 'inherit';
+                          val.style.fontSize = '1em';
+                        }
+                        }}/></Col>
+                      <Col lg={4}><input type='date' name='expires-on' id='expire' required onChange={(e)=>{
+                        setTo(e.target.value)
+                        if(e.target.value === ""){
+                          exp.textContent = '* Required';
+                          exp.style.color = 'red';
+                          exp.style.fontSize = '.9em';
+                        } else{
+                          exp.textContent = '*';
+                          exp.style.color = 'inherit';
+                          exp.style.fontSize = '1em';
+                        }
+                        }}/></Col>
                       <Col lg={4}><input type='text' name='ftp' id='ftp' onChange={(e)=>{setFtp(e.target.value)}}/></Col>
-                    </Row>
-                    <Row className='error'>
-                      <Col lg={4}><span htmlFor='valid'>*required</span></Col>
-                      <Col lg={4}><span htmlFor='valid'>*required</span></Col>
-                      <Col lg={4}><span htmlFor='valid'>*required</span></Col>
                     </Row>
                     <Row className='mt-2'>
                       <label htmlFor='notes'>Notes</label>
@@ -137,7 +167,7 @@ const RateLock=() =>{
                     </Row>
                     <Row>
                       <div style={{display:'flex', justifyContent:'end', padding:'3em 0 0 0'}}>
-                        <button style={{marginRight:'30px', padding:'8px', borderRadius:'5px', border:'none', background:'inherit'}} type='submit' data-testid='cancel' onClick={handleClose}>
+                        <button form='ratelock' style={{marginRight:'30px', padding:'8px', borderRadius:'5px', border:'none', background:'inherit'}} type='submit' data-testid='cancel' onClick={handleClose}>
                           CANCEL
                         </button>
                         <button form='ratelock' style={{padding:'8px', borderRadius:'5px', border:'none', backgroundColor:'blue', color:'white'}} type='submit'  onClick={(e)=>{handleSubmit(e)}} data-testid='save'>
