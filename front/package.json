@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@mui/base": "^5.0.0-alpha.110",
     "@mui/material": "^5.10.9",
     "@testing-library/jest-dom": "^5.16.5",
     "ag-grid-community": "^28.2.0",

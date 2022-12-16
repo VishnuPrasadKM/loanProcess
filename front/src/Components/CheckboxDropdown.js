@@ -1,16 +1,23 @@
-import React, { useState, useEffect, useMemo, useCallback} from 'react';    
+import React, { useState } from 'react';    
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import { AiOutlineAppstore } from "react-icons/ai";
+import ClickAwayListener from '@mui/base/ClickAwayListener';
 
 const CheckboxDropdown = () => {
 
   const [columnName, setcolumnName] = useState([]);
-  const [arr, setArr]=useState([])
+  const [arr, setArr]=useState([]);
+  const [open, setOpen] = useState(false);
   
+  const handleClickAway = () => {
+    setOpen(false);
+    console.log(open);
+  };
+
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -51,6 +58,7 @@ const handelSubmit = (arr) => {
 
 return (
   <div style={{display:'flex',alignItems:'center'}}>
+    <ClickAwayListener onClickAway={handleClickAway}>
     <FormControl sx={{ m: 1, width: 120 }}>
       <Select
         displayEmpty
@@ -73,10 +81,15 @@ return (
           </MenuItem>
         ))}
         <MenuItem>
-          <button onClick={()=>{handelSubmit(arr)}}>Confirm</button>
+          <button onClick={()=>{
+            handelSubmit(arr);
+            // document.querySelector("#menu- > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiPaper-root.MuiMenu-paper.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPopover-paper.css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper").style.display = "none";
+
+            }}>Confirm</button>
         </MenuItem>
       </Select>
     </FormControl>
+    </ClickAwayListener>
   </div>
 );
 }

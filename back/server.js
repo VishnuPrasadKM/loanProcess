@@ -21,6 +21,7 @@ mongoose
 
 app.use('/api/data/loandata', require('./routes/loanRoute'))
 app.use('/api/data/ratelock', require('./routes/rateLockRoute'))
+app.use('/api/data/waiver', require('./routes/waiverRoute'))
 app.get("*", (req, res) =>{
   res.status(404)
   res.send(`Available routes on this port ${PORT}
