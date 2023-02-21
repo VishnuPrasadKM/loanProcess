@@ -26,5 +26,6 @@ app.get("*", (req, res) =>{
   res.status(404)
   res.send(`Available routes on this port ${PORT}
         1. http://localhost:5000/api/data/ratelock   
-        2. http://localhost:5000/api/data/loandata`)
+        2. http://localhost:5000/api/data/loandata
+        3. http://localhost:5000/api/data/waiver`)
 });

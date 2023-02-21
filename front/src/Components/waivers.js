@@ -1,6 +1,6 @@
 import {AiOutlineHome} from 'react-icons/ai'
 import {IoIosArrowForward} from 'react-icons/io'
-import Header from './Reusable/header'
+import Header from './header'
 import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Col, Container, Row } from 'react-bootstrap';

@@ -15,7 +15,6 @@ const CheckboxDropdown = () => {
   
   const handleClickAway = () => {
     setOpen(false);
-    console.log(open);
   };
 
   const ITEM_HEIGHT = 48;
@@ -83,8 +82,6 @@ return (
         <MenuItem>
           <button onClick={()=>{
             handelSubmit(arr);
-            // document.querySelector("#menu- > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiPaper-root.MuiMenu-paper.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation8.MuiPopover-paper.css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper").style.display = "none";
-
             }}>Confirm</button>
         </MenuItem>
       </Select>

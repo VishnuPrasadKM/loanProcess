@@ -13,28 +13,28 @@ const ModalComponent = (prams) =>{
   const navigate = useNavigate();
     return(
     <>
-    <a onClick={()=>
+    <p onClick={()=>
       {
         <RateLock data={prams.data} />;
         let id = prams.data._id
         navigate(`/ratelock/${id}`)
       }}>
-        {prams.value}</a>
+        {prams.value}</p>
     </>)
 }
 
 const WaiverModalComponent = (prams) =>{
 
   const navigate = useNavigate();
-    return(
+    return( 
     <>
-    <a onClick={()=>
+    <p onClick={()=>
       {
         let id = prams.data._id;
         window.sessionStorage.setItem('amount', prams.data.amount)
         navigate(`/waivers/${id}`)
       }}>
-        {prams.value}</a>
+        {prams.value}</p>
     </>)
 }
 
@@ -116,7 +116,7 @@ const Data = () => {
       <label htmlFor="search">Search</label>
     </div>
 
-    <button data-tesid='search-button' type='submit' className='greyButton' style={{width:'8%', height:'35px', marginLeft:'25px'}} onClick={(e)=>Click(e)}><BsSearch/> Search</button>
+    <button data-tesid='search-button' type='submit' className='greyButton' style={{display:'flex', width:'8%', height:'35px', marginLeft:'25px'}} onClick={(e)=>Click(e)}><BsSearch style={{margin:'6px'}}/> Search</button>
     <div style={{marginLeft:'30%'}}>
       <div style={{display:'flex', alignItems:'center'}}>
         <CheckboxDropdown data-tesid='dropdown-check'/>
