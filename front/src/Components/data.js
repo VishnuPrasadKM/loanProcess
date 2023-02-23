@@ -124,7 +124,7 @@ const Data = () => {
     </div>
         <div>
           <div style={{display:'flex', alignItems:'baseline' , justifyContent:'flex-end'}}>
-            <button onClick={(e)=>showColumn(e)} style={{background:'inherit', border:'none'}}><BiHide/></button>
+            <button onClick={(e)=>showColumn(e)} style={{background:'inherit', border:'none', marginBottom: '5px'}}><BiHide/></button>
           </div>
         </div>
   </form>
