@@ -80,7 +80,7 @@ return (
           </MenuItem>
         ))}
         <MenuItem>
-          <button onClick={()=>{
+          <button style={{padding:'8px',borderRadius:'5px', border:'none', backgroundColor:'blue', color:'white'}} onClick={()=>{
             handelSubmit(arr);
             }}>Confirm</button>
         </MenuItem>
