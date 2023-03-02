@@ -1,7 +1,7 @@
 import React from 'react'
 import './compStyles.css'
 import { Container } from 'react-bootstrap'
-import Header from './Reusable/header';
+import Header from './header';
 import Data from './data'
 
 const LandingPage = () => {

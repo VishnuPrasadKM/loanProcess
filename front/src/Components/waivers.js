@@ -1,6 +1,6 @@
 import {AiOutlineHome} from 'react-icons/ai'
 import {IoIosArrowForward} from 'react-icons/io'
-import Header from './Reusable/header'
+import Header from './header'
 import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Col, Container, Row } from 'react-bootstrap';
@@ -223,7 +223,7 @@ const Waiver=() =>{
             <button form='waiverForm' type='submit' style={{padding:'5px', border:'none', background:'inherit'}} onClick={handleClose}>
                 CANCEL
               </button>
-              <button form='waiverForm' type='submit' style={{padding:'5px', border:'none', color:'white', background:'blue'}}>
+              <button form='waiverForm' type='submit' style={{padding:'5px', borderRadius:'5px', border:'none', backgroundColor:'blue', color:'white'}}>
                 SAVE CHANGES
               </button>
             </Modal.Footer>

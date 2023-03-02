@@ -13,7 +13,7 @@ const ModalComponent = (prams) =>{
   const navigate = useNavigate();
     return(
     <>
-    <a onClick={()=>
+    <a style={{cursor:'pointer', textDecoration:'none'}} className='redirect' onClick={()=>
       {
         <RateLock data={prams.data} />;
         let id = prams.data._id
@@ -26,9 +26,9 @@ const ModalComponent = (prams) =>{
 const WaiverModalComponent = (prams) =>{
 
   const navigate = useNavigate();
-    return(
+    return( 
     <>
-    <a onClick={()=>
+    <a style={{cursor:'pointer', textDecoration:'none'}} className='redirect' onClick={()=>
       {
         let id = prams.data._id;
         window.sessionStorage.setItem('amount', prams.data.amount)
@@ -69,6 +69,13 @@ const Data = () => {
     setGridColumnApi(prams.columnApi);
   };
 
+  const onFilterTextChange = (e) => {
+    gridApi.setQuickFilter(e.target.value)
+  };
+  const  Click = (e) => {
+    e.preventDefault();
+ }
+
   const showColumn=(e)=>{
     let colHide = JSON.parse(sessionStorage.getItem('colHide'))
     e.preventDefault()
@@ -99,12 +106,7 @@ const Data = () => {
       .then((rowData) => setRowData(rowData))
     }
 
-    const [search, setSearch] = useState('')
 
-    function Click(e) {
-      e.preventDefault();
-      gridApi.setQuickFilter(search)
-   }
 
  return (
   <>
@@ -112,11 +114,11 @@ const Data = () => {
 
     <div className="field">
       <input type="search" name="serch" id="search" 
-        placeholder="Loan # | Pool Name | Pool ID | Client Name | Property Address" onChange={(e)=>{setSearch(e.target.value)}}/>
+        placeholder="Loan # | Pool Name | Pool ID | Client Name | Property Address" onChange={onFilterTextChange}/>
       <label htmlFor="search">Search</label>
     </div>
 
-    <button data-tesid='search-button' type='submit' className='greyButton' style={{width:'8%', height:'35px', marginLeft:'25px'}} onClick={(e)=>Click(e)}><BsSearch/> Search</button>
+    <button data-tesid='search-button' type='submit' className='primary' style={{display:'flex', width:'8%', height:'35px', marginLeft:'25px', borderRadius:'5px', border:'none', backgroundColor:'blue', color:'white', alignItems:'center'}} onClick={(e)=>Click(e)}><BsSearch style={{margin:'6px'}}/> Search</button>
     <div style={{marginLeft:'30%'}}>
       <div style={{display:'flex', alignItems:'center'}}>
         <CheckboxDropdown data-tesid='dropdown-check'/>
@@ -124,7 +126,7 @@ const Data = () => {
     </div>
         <div>
           <div style={{display:'flex', alignItems:'baseline' , justifyContent:'flex-end'}}>
-            <button onClick={(e)=>showColumn(e)} style={{background:'inherit', border:'none'}}><BiHide/></button>
+            <button onClick={(e)=>showColumn(e)} style={{background:'inherit', border:'none', marginBottom: '5px'}}><BiHide/></button>
           </div>
         </div>
   </form>
